@@ -4,6 +4,7 @@ import { InsertSort }  from '../../sort/insert-sort'
 import {util} from '../../util/util';
 import { BubbleSort } from '../../sort/bubble-sort';
 import { MergeSort } from '../../sort/merge-sort';
+import { QuickSort } from '../../sort/quick-sort';
 
 describe('排序算法测试',()=>{
    
@@ -26,6 +27,10 @@ describe('排序算法测试',()=>{
     });
 
     it('Quick sort',()=>{
-        let insertSort :AbstractSort = new InsertSort();
+        let quickSort :AbstractSort = new QuickSort();
+        let target = quickSort.sort(util.getSource());
+        let previousTime = new Date().getTime();
+        expect(util.compare(target)).to.be.equal(true);
+        console.log("*** sort used time =" + (new Date().getTime() - previousTime)+ " ***");
     });
 })
