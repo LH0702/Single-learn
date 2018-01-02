@@ -1,7 +1,6 @@
 import { AbstractSort }  from './sort/abstract-sort';
 import { InsertSort }  from './sort/insert-sort'
 import {util} from './util/util';
-import * as fs from 'fs';
 import { BubbleSort } from './sort/bubble-sort';
 import { MergeSort } from './sort/merge-sort';
 
