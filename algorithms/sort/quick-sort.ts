@@ -30,12 +30,5 @@ export class QuickSort extends AbstractSort{
         return i;
 
     }
-
-    private swap(inputList: number[],left:number,right:number){
-        let tmp = inputList[left];
-        inputList[left] = inputList[right];
-        inputList[right] = tmp;
-    
-    }
     
 }
