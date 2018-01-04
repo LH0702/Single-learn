@@ -7,7 +7,7 @@ export class HeapSort extends AbstractSort{
 
     private heapSort(inputList: number[]):number[]{
         let maxHeap:MaxHeap = this.buildMaxHeap(inputList);
-        for(let i = inputList.length - 1; i >= 1 ; i++){
+        for(let i = inputList.length - 1; i >= 1 ; i--){
             this.swap(inputList,0,i);
             maxHeap.heapSize -= 1;
             this.maxHeapify(maxHeap,0);
@@ -16,33 +16,33 @@ export class HeapSort extends AbstractSort{
     }
 
     private getLeft(index:number):number{
-        return index <<1 +1;
+        return (index << 1)  +1;
     }
 
     private getRight(index:number):number{
-        return index << 1 + 2;
+        return (index << 1) + 2;
     }
 
     private getParent(index:number):number{
         return (index - 1) >> 1;
     }
 
-    private maxHeapify(input:MaxHeap, index:number){
-         let largest = input.inputList[index];
+    private maxHeapify(maxheap:MaxHeap, index:number){
+         let largest = index;
          let left = this.getLeft(index);
          let right = this.getRight(index);
 
-         if(left <= input.heapSize && left >= input.inputList[index]){
+         if(left < maxheap.heapSize && maxheap.inputList[left] >= maxheap.inputList[index]){
             largest = left;
          }
 
-         if(right <= input.heapSize && right >= input.inputList[largest]){
+         if(right < maxheap.heapSize && maxheap.inputList[right] >= maxheap.inputList[largest]){
              largest = right;
          }
 
          if(largest !== index){
-            this.swap(input.inputList,index,largest);
-            this.maxHeapify(input,largest);
+            this.swap(maxheap.inputList,index,largest);
+            this.maxHeapify(maxheap,largest);
          }
 
     }
