@@ -42,4 +42,12 @@ describe('排序算法测试',()=>{
         expect(util.compare(target)).to.be.equal(true);
         console.log("*** sort used time =" + (new Date().getTime() - previousTime)+ " ***");
     });
+
+    it('Heap sort',()=>{
+        let heapSort :AbstractSort = new HeapSort();
+        let target = heapSort.sort(util.getSource());
+        let previousTime = new Date().getTime();
+        expect(util.compare(target)).to.be.equal(true);
+        console.log("*** sort used time =" + (new Date().getTime() - previousTime)+ " ***");
+    });
 })
