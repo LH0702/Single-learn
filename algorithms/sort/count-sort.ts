@@ -26,7 +26,7 @@ export class  CountSort extends AbstractSort{
             count[i] = count[i] + count[i-1];
         }
  
-        for(let i = 0; i < inputList.length; i++){
+        for(let i = inputList.length -1; i >= 0; i--){
             sortedArray[count[inputList[i]] - 1] = inputList[i];
             count[inputList[i]] -= 1;
         }
