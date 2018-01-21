@@ -6,9 +6,12 @@ import { AbstractSort } from "./abstract-sort";
 export class  CountSort extends AbstractSort{
 
     public sort(inputList: number[]): number[] {
-        //一直需要排序数组的最大值为10000, 初始化计数数组
+
+        let digital = super.getMaxNumber(inputList);
+        
+        //一直需要排序数组的最大值为digital, 初始化计数数组
         let count:number[] = [];
-        for(let i = 0;i <= 10000;i++){
+        for(let i = 0;i <= digital;i++){
             count.push(0);
         }
 

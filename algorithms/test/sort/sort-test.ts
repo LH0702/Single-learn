@@ -7,6 +7,7 @@ import { MergeSort } from '../../sort/merge-sort';
 import { QuickSort } from '../../sort/quick-sort';
 import { HeapSort } from '../../sort/heap-sort';
 import { CountSort } from '../../sort/count-sort';
+import { RadixSort } from '../../sort/radix-sort';
 
 describe('排序算法测试',()=>{
    
@@ -43,6 +44,12 @@ describe('排序算法测试',()=>{
     it('count sort',()=>{
         let countSort :AbstractSort = new CountSort();
         let target = countSort.sort(util.getSource());
+        expect(util.compare(target)).to.be.equal(true);
+    });
+
+    it('radix sort',()=>{
+        let radixSort :AbstractSort = new RadixSort();
+        let target = radixSort.sort(util.getSource());
         expect(util.compare(target)).to.be.equal(true);
     });
 })
