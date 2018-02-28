@@ -8,6 +8,7 @@ import { QuickSort } from '../../sort/quick-sort';
 import { HeapSort } from '../../sort/heap-sort';
 import { CountSort } from '../../sort/count-sort';
 import { RadixSort } from '../../sort/radix-sort';
+import { BucketSort } from '../../sort/bucket-sort';
 
 describe('排序算法测试',()=>{
    
@@ -50,6 +51,12 @@ describe('排序算法测试',()=>{
     it('radix sort',()=>{
         let radixSort :AbstractSort = new RadixSort();
         let target = radixSort.sort(util.getSource());
+        expect(util.compare(target)).to.be.equal(true);
+    });
+
+    it('bucket sort',()=>{
+        let bucketSort :AbstractSort = new BucketSort();
+        let target = bucketSort.sort(util.getSource());
         expect(util.compare(target)).to.be.equal(true);
     });
 })
