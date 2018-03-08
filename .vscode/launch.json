@@ -8,14 +8,14 @@
         "type": "node",
         "request": "launch",
         "name": "Mocha Tests",
-        "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+        "program": "${workspaceFolder}/algorithms/node_modules/mocha/bin/_mocha",
         "args": [
             "-u",
             "tdd",
             "--timeout",
             "999999",
             "--colors",
-            "${workspaceFolder}/test"
+            "${workspaceFolder}/algorithms/dist/test/Medians-and-Order-Statistics/*.js"
         ],
         "internalConsoleOptions": "openOnSessionStart"
     },
@@ -25,7 +25,7 @@
             "name": "Launch Program",
             "program": "${file}",
             "outFiles": [
-                "${workspaceFolder}/dist/test/*.js"
+                "${workspaceFolder}/dist/test/Medians-and-Order-Statistics/*.js"
             ]
         }
     ]

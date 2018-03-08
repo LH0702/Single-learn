@@ -33,8 +33,8 @@ describe('期望为线性的选择算法', () => {
         it('数组大小为10，获取第1,9,10大的数值', () => {
             let inArray = [1,6,9,-5,0,17,1,3,3,13];
            expect(13).to.be.equal(randomSelect.select(inArray,9));
-           expect(-5).to.be.equal(randomSelect.select(inArray,10));
-           expect(17).to.be.equal(randomSelect.select(inArray,1));
+           expect(17).to.be.equal(randomSelect.select(inArray,10));
+           expect(-5).to.be.equal(randomSelect.select(inArray,1));
         });
     })
   
