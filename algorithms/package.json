@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --timeout 15000 dist/test/**/*.js",
-    "test-1": "mocha  dist/test/Medians-and-Order-Statistics/*.js"
+    "test-1": "mocha  dist/test/Medians-and-Order-Statistics/*.js",
+    "test-bst": "mocha  dist/test/binary-search-tree/*.js"
   },
   "author": "",
   "license": "ISC",
