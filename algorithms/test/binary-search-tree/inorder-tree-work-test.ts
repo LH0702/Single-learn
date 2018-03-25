@@ -14,8 +14,12 @@ describe('二叉树遍历', () => {
         
         it('002_定义的输出数组为null', () => {
             let output:any[] = null;
-           
-            expect(inOrderTreeWork(null,output)).to.throw('output list is null');
+            try{
+                inOrderTreeWork(null,output);
+            }catch(e){
+                expect(e.message).to.be.equal('output list is null');
+            }
+            
         });
 
         it('003_只有一个父节点', () => {
