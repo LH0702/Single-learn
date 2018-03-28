@@ -15,7 +15,7 @@
             "--timeout",
             "999999",
             "--colors",
-            "${workspaceFolder}/algorithms/dist/test/Medians-and-Order-Statistics/*.js"
+            "${workspaceFolder}/algorithms/dist/test/binary-search-tree/*.js"
         ],
         "internalConsoleOptions": "openOnSessionStart"
     },
@@ -25,7 +25,7 @@
             "name": "Launch Program",
             "program": "${file}",
             "outFiles": [
-                "${workspaceFolder}/dist/test/Medians-and-Order-Statistics/*.js"
+                "${workspaceFolder}/algorithms/dist/test/binary-search-tree/*.js"
             ]
         }
     ]
