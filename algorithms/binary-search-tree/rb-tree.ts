@@ -47,7 +47,27 @@ export class RBTree{
     }
 
     private rbTreeInsertFixup(insertNode:RBTreeNode){
+        let parent = insertNode.parent;
+        while(parent.color == Color.RED){
+            if(parent.parent.left == parent){   // need to know p.p is NIL
+                if(parent.parent.right.color == Color.RED){
+                    parent.color = Color.BLACK;
+                    parent.parent.right.color = Color.BLACK;
+                    parent.parent.color = Color.RED;
+                }else{
+                    if(parent.right == insertNode){
+                        this.leftRotate(parent);
+                        parent = insertNode;
+                    }else{
+                        parent.parent.color = Color.RED;
+                        parent.color = Color.BLACK;
+                        this.rightRotate(parent.parent)
+                    }
+                }
+            }else{
 
+            }
+        }
     }
 
     private leftRotate(node:RBTreeNode){
@@ -82,7 +102,7 @@ export class RBTree{
            
         let leftChild = node.left;
       
-        if(node.parent == this.NIL){    // links rotate parent to rightChild
+        if(node.parent == this.NIL){    // links rotate parent to leftChild
             this.root = leftChild;
         }else if(node.parent.left == node){
             node.parent.left = leftChild;
@@ -91,12 +111,12 @@ export class RBTree{
         }
         leftChild.parent = node.parent;
 
-        node.left = leftChild.right;    // turn rightChild's left into rotate node right 
+        node.left = leftChild.right;    // turnleftChild's right into rotate node left 
         if(leftChild.right != this.NIL){
             leftChild.right.parent = node;
         }
         
-        node.parent = leftChild;  // put rightChild as rotate node parent
+        node.parent = leftChild;  // put leftChild as rotate node parent
         leftChild.right = node;
     }
 }
