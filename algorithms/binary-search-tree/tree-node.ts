@@ -14,5 +14,6 @@ interface RBTreeNode extends TreeNode {
     color: Color,
     left: RBTreeNode,
     right: RBTreeNode,
+    parent: RBTreeNode,
 }
 
