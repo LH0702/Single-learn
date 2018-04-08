@@ -54,6 +54,7 @@ export class RBTree{
                     parent.color = Color.BLACK;
                     parent.parent.right.color = Color.BLACK;
                     parent.parent.color = Color.RED;
+                    parent = parent.parent;
                 }else{
                     if(parent.right == insertNode){
                         this.leftRotate(parent);
@@ -65,9 +66,24 @@ export class RBTree{
                     }
                 }
             }else{
-
+                if(parent.parent.left.color == Color.RED){
+                    parent.color = Color.BLACK;
+                    parent.parent.left.color = Color.BLACK;
+                    parent.parent.color = Color.RED;
+                    parent = parent.parent;
+                }else{
+                    if(parent.left == insertNode){
+                        this.rightRotate(parent);
+                        parent = insertNode;
+                    }else{
+                        parent.parent.color = Color.RED;
+                        parent.color = Color.BLACK;
+                        this.leftRotate(parent.parent)
+                    }
+                }
             }
         }
+        this.root.color = Color.BLACK;
     }
 
     private leftRotate(node:RBTreeNode){
