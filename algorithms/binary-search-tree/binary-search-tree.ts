@@ -110,7 +110,7 @@ export class BST {
             this.transplant(deleteNode, deleteNode.left);
         } else {
             let tmp = this.treeMinimum(deleteNode.right);
-            if (deleteNode.right != tmp) {
+            if (tmp.parent != deleteNode) {
                 this.transplant(tmp, tmp.right);
                 tmp.right = deleteNode.right;
                 tmp.right.parent = tmp;

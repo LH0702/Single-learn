@@ -9,6 +9,19 @@ export class RBTree{
 
     private root : RBTreeNode = this.NIL;
 
+    public treeSearch(value: number): TreeNode {
+        let tmpNode = this.root
+        while (tmpNode != null && tmpNode.value != value) {
+            if (tmpNode.value > value) {
+                tmpNode = tmpNode.left;
+            } else {
+                tmpNode = tmpNode.right;
+            }
+        }
+
+        return tmpNode;
+    }
+
     public treeInsert(value:number){
         let insertNode :RBTreeNode = this.generateTreeNode(value);
 
@@ -34,6 +47,14 @@ export class RBTree{
         insertNode.parent = pre;
 
         this.rbTreeInsertFixup(insertNode)
+    }
+
+    public treeMinimum(node ?:RBTreeNode): RBTreeNode {
+        let tmpNode = node || this.root;
+        while (tmpNode.left != this.NIL) {
+            tmpNode = tmpNode.left;
+        }
+        return tmpNode;
     }
 
     private generateTreeNode(value:number):RBTreeNode{
@@ -86,6 +107,99 @@ export class RBTree{
         this.root.color = Color.BLACK;
     }
 
+    public treeDelete(node:number):void;
+    public treeDelete(node:RBTreeNode):void;
+    public treeDelete(node:any):void{
+        let deleteNode;
+        if(typeof node ==  'number'){
+            deleteNode = this.treeSearch(node);
+        }else{
+            deleteNode = node;
+        }
+
+        if(deleteNode == null){
+            return;
+        }
+
+        let fillNode ;
+        let originalColor = deleteNode.color;
+        if (deleteNode.left == this.NIL) {
+            fillNode = deleteNode.right;
+            this.transplant(deleteNode, deleteNode.right);
+        } else if (deleteNode.right == this.NIL) {
+            fillNode = deleteNode.left;
+            this.transplant(deleteNode, deleteNode.left);
+        } else {
+            let tmp = this.treeMinimum(deleteNode.right);
+            fillNode = tmp.right;
+            originalColor = tmp.color;
+            if (tmp.parent != deleteNode) {
+                this.transplant(tmp, tmp.right);
+                tmp.right = deleteNode.right;
+                tmp.right.parent = tmp;
+            }
+
+            this.transplant(deleteNode, tmp);
+            tmp.left = deleteNode.left;
+            deleteNode.left.parent = tmp;
+            tmp.color = deleteNode.color;
+        } 
+
+        if(originalColor == Color.BLACK){
+            this.rbTreeDeleteFixup(fillNode)
+        }
+
+    }
+    
+    private rbTreeDeleteFixup(node:RBTreeNode){
+        while(node.color == Color.BLACK){
+            if(node.parent.left == node){
+                let brother = node.parent.right;
+                if(brother.color == Color.RED){
+                    brother.color = Color.BLACK;
+                    node.parent.color = Color.RED;
+                    this.leftRotate(node.parent);
+                }
+                
+                if(brother.left.color == Color.BLACK && brother.right.color == Color.BLACK){
+                    brother.color = Color.RED;
+                    node = node.parent;
+                }else if(brother.left.color == Color.BLACK){
+                    
+                }else if(brother.right.color == Color.BLACK){
+
+                }
+            }else{
+                let brother = node.parent.left;
+                if(brother.color == Color.RED){
+                    brother.color = Color.BLACK;
+                    node.parent.color = Color.RED;
+                    this.rightRotate(node.parent);
+                }
+            }                                                                                                                                          
+        }
+
+        node.color = Color.BLACK;
+    }
+
+    public getInOrderDisplay():number[]{
+        let output:number[] = [];
+        this.inOrderTreeWork(this.root,output)
+        return output;
+    }
+
+    private inOrderTreeWork(node :RBTreeNode,output: any[]) {
+        if (output == null) {
+            throw new Error('output list is null');
+        }
+
+        if (node) {
+            this.inOrderTreeWork(node.left, output);
+            output.push(node.value);
+            this.inOrderTreeWork(node.right, output);
+        }
+    }
+
     private leftRotate(node:RBTreeNode){
         if(node.right != this.NIL){
             return;
@@ -134,5 +248,27 @@ export class RBTree{
         
         node.parent = leftChild;  // put leftChild as rotate node parent
         leftChild.right = node;
+    }
+
+    /**
+     * 用v 树替换 u树，成为u树父节点的子节点
+     * @param u 
+     * @param v 
+     */                 
+    private transplant(u: RBTreeNode, v: RBTreeNode){
+        if (u == null || u.parent == null) {
+           this.root = v;
+           return;
+        }
+
+        if (u.parent.left == u) {
+            u.parent.left = v;
+        } else {
+            u.parent.right = v
+        }
+        if(v != null){
+            v.parent = u.parent;
+        }
+        
     }
 }
