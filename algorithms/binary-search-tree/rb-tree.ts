@@ -1,5 +1,5 @@
 export class RBTree{
-    private readonly NIL :RBTreeNode ={
+    public readonly NIL :RBTreeNode ={
         parent :null,
         left : null,
         right :null,
@@ -9,7 +9,7 @@ export class RBTree{
 
     private root : RBTreeNode = this.NIL;
 
-    public treeSearch(value: number): TreeNode {
+    public treeSearch(value: number): RBTreeNode {
         let tmpNode = this.root
         while (tmpNode != null && tmpNode.value != value) {
             if (tmpNode.value > value) {
@@ -164,11 +164,18 @@ export class RBTree{
                 if(brother.left.color == Color.BLACK && brother.right.color == Color.BLACK){
                     brother.color = Color.RED;
                     node = node.parent;
-                }else if(brother.left.color == Color.BLACK){
+                }else{
+                    if(brother.right.color == Color.BLACK){
+                        brother.color = Color.RED;
+                        brother.left.color = Color.BLACK;
+                        this.rightRotate(brother);
+                        brother = node.parent.right;
+                    }
                     
-                }else if(brother.right.color == Color.BLACK){
-
-                }
+                    node.parent.color = Color.RED;
+                    this.leftRotate(node.parent);
+                    brother.right.color = Color.BLACK;
+                } 
             }else{
                 let brother = node.parent.left;
                 if(brother.color == Color.RED){
@@ -176,6 +183,23 @@ export class RBTree{
                     node.parent.color = Color.RED;
                     this.rightRotate(node.parent);
                 }
+
+                if(brother.left.color == Color.BLACK && brother.right.color == Color.BLACK){
+                    brother.color = Color.RED;
+                    node = node.parent;
+                }else {
+                    if(brother.left.color == Color.BLACK){
+                        brother.color = Color.RED; 
+                        brother.right.color = Color.BLACK;
+                        this.leftRotate(brother);
+                        brother = node.parent.right;
+                    }
+                    
+                    node.parent.color = Color.RED;
+                    this.rightRotate(node.parent);
+                    brother.left.color = Color.BLACK;
+                }
+                
             }                                                                                                                                          
         }
 
