@@ -1,11 +1,11 @@
 import { expect, AssertionError,should } from 'chai';
 import { RBTree } from '../../binary-search-tree/rb-tree';
-
-function generateTreeNode(value:number,color:Color):RBTreeNode{
+import { Color,RBTreeNode } from '../../binary-search-tree/tree-node';
+function generateTreeNode(value:number,color:Color,parent:RBTreeNode,left:RBTreeNode,right:RBTreeNode):RBTreeNode{
  return {
-     parent :null,
-     left:null,
-     right:null,
+     parent :parent,
+     left:left,
+     right:right,
      value:value,
      color:color
  }
@@ -52,7 +52,7 @@ describe('红黑树测试', () => {
             expect(Color.RED).to.be.deep.equal(child.color);
             expect(root).to.be.deep.equal(child.parent);
             expect(b.NIL).to.be.deep.equal(child.right);
-            expect(b.NIL).to.be.deep.equal(child.parent);
+            expect(b.NIL).to.be.deep.equal(child.left);
 
         });
 
@@ -75,7 +75,7 @@ describe('红黑树测试', () => {
             expect(Color.RED).to.be.deep.equal(child.color);
             expect(root).to.be.deep.equal(child.parent);
             expect(b.NIL).to.be.deep.equal(child.right);
-            expect(b.NIL).to.be.deep.equal(child.parent);
+            expect(b.NIL).to.be.deep.equal(child.left);
         });
 
         it('006_一个父节点和一个左节点，右节点', () => {
@@ -100,12 +100,12 @@ describe('红黑树测试', () => {
             expect(Color.RED).to.be.deep.equal(rchild.color);
             expect(root).to.be.deep.equal(rchild.parent);
             expect(b.NIL).to.be.deep.equal(rchild.right);
-            expect(b.NIL).to.be.deep.equal(rchild.parent);
+            expect(b.NIL).to.be.deep.equal(rchild.left);
 
             expect(Color.RED).to.be.deep.equal(lchild.color);
             expect(root).to.be.deep.equal(lchild.parent);
             expect(b.NIL).to.be.deep.equal(lchild.right);
-            expect(b.NIL).to.be.deep.equal(lchild.parent);
+            expect(b.NIL).to.be.deep.equal(lchild.left);
         });
 
         it('007_一个父节点和多个子节点', () => {
@@ -188,12 +188,20 @@ describe('红黑树测试', () => {
             b.treeInsert(1);
             expect([1, 2, 3, 4, 5]).to.be.deep.equal(b.getInOrderDisplay());
 
-            let root = generateTreeNode(4,Color.BLACK)
+            let root = generateTreeNode(4,Color.BLACK,b.NIL,b.NIL,b.NIL)
             root.parent = b.NIL;
-            root.color = Color.BLACK
 
-            let node1 = generateTreeNode(2,Color.RED)
-            
+            let node1 = generateTreeNode(2,Color.BLACK,root,b.NIL,b.NIL)
+            let node2 = generateTreeNode(5,Color.BLACK,root,b.NIL,b.NIL)
+            root.left = node1;
+            root.right = node2;
+
+            let node3 = generateTreeNode(1,Color.RED,node1,b.NIL,b.NIL);
+            let node4 = generateTreeNode(3,Color.RED,node1,b.NIL,b.NIL);
+            node1.left = node3;
+            node1.right = node4;
+
+            expect(root).to.be.deep.equal(b['root']);
         });
 
         it('00_9一个父节点和多个右节点，无左节点', () => {
@@ -263,3 +271,4 @@ describe('红黑树测试', () => {
 
 
 // })
+})

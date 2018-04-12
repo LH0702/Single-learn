@@ -1,16 +1,16 @@
-interface TreeNode {
+export interface TreeNode {
     parent: TreeNode,
     left: TreeNode,
     right: TreeNode,
     value: any
 }
 
-enum Color {
+export enum Color {
     RED,
     BLACK
 }
 
-interface RBTreeNode extends TreeNode {
+export interface RBTreeNode extends TreeNode {
     color: Color,
     left: RBTreeNode,
     right: RBTreeNode,

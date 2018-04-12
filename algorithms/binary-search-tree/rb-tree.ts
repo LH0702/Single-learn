@@ -1,3 +1,4 @@
+import {RBTreeNode,Color} from './tree-node'
 export class RBTree{
     public readonly NIL :RBTreeNode ={
         parent :null,
@@ -19,6 +20,14 @@ export class RBTree{
             }
         }
 
+        return tmpNode;
+    }
+
+    public treeMinimum(node ?:RBTreeNode): RBTreeNode {
+        let tmpNode = node || this.root;
+        while (tmpNode.left != this.NIL) {
+            tmpNode = tmpNode.left;
+        }
         return tmpNode;
     }
 
@@ -49,17 +58,11 @@ export class RBTree{
         this.rbTreeInsertFixup(insertNode)
     }
 
-    public treeMinimum(node ?:RBTreeNode): RBTreeNode {
-        let tmpNode = node || this.root;
-        while (tmpNode.left != this.NIL) {
-            tmpNode = tmpNode.left;
-        }
-        return tmpNode;
-    }
+   
 
     private generateTreeNode(value:number):RBTreeNode{
         return {
-            parent :null,
+            parent :this.NIL,
             left : this.NIL,
             right :this.NIL,
             value : value,
@@ -68,23 +71,25 @@ export class RBTree{
     }
 
     private rbTreeInsertFixup(insertNode:RBTreeNode){
-        let parent = insertNode.parent;
-        while(parent.color == Color.RED){
+        let insert = insertNode;
+        while(insert.parent.color == Color.RED){
+            let parent = insert.parent;
             if(parent.parent.left == parent){   // need to know p.p is NIL
                 if(parent.parent.right.color == Color.RED){
                     parent.color = Color.BLACK;
                     parent.parent.right.color = Color.BLACK;
                     parent.parent.color = Color.RED;
-                    parent = parent.parent;
+                    insert = insert.parent.parent;
                 }else{
-                    if(parent.right == insertNode){
+                    if(parent.right == insert){
+                        insert = parent;
                         this.leftRotate(parent);
-                        parent = insertNode;
-                    }else{
-                        parent.parent.color = Color.RED;
-                        parent.color = Color.BLACK;
-                        this.rightRotate(parent.parent)
                     }
+
+                    parent.parent.color = Color.RED;
+                    parent.color = Color.BLACK;
+                    this.rightRotate(parent.parent)
+                     
                 }
             }else{
                 if(parent.parent.left.color == Color.RED){
@@ -93,9 +98,10 @@ export class RBTree{
                     parent.parent.color = Color.RED;
                     parent = parent.parent;
                 }else{
-                    if(parent.left == insertNode){
+                    if(parent.left == insert){
+                        insert = parent;
                         this.rightRotate(parent);
-                        parent = insertNode;
+                      
                     }else{
                         parent.parent.color = Color.RED;
                         parent.color = Color.BLACK;
@@ -219,7 +225,7 @@ export class RBTree{
             throw new Error('output list is null');
         }
 
-        if (node) {
+        if (node != this.NIL) {
             this.inOrderTreeWork(node.left, output);
             output.push(node.value);
             this.inOrderTreeWork(node.right, output);

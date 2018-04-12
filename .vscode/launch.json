@@ -15,7 +15,7 @@
             "--timeout",
             "999999",
             "--colors",
-            "${workspaceFolder}/algorithms/dist/test/binary-search-tree/*.js"
+            "${workspaceFolder}/algorithms/dist/test/binary-search-tree/rbtree-test.js"
         ],
         "internalConsoleOptions": "openOnSessionStart"
     },

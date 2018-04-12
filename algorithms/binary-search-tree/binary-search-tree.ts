@@ -1,3 +1,4 @@
+import {TreeNode} from './tree-node'
 export class BST {
 
     private root:TreeNode ;
