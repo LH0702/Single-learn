@@ -74,7 +74,7 @@ describe('二叉树测试', () => {
 
     });
 
-    describe('简单插入测试', () => {
+    describe('简单删除测试', () => {
 
         let b = new BST();
         b.treeInsert(15);

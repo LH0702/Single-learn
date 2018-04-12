@@ -152,7 +152,7 @@ export class RBTree{
     }
     
     private rbTreeDeleteFixup(node:RBTreeNode){
-        while(node.color == Color.BLACK){
+        while(node.color == Color.BLACK && node != this.root){
             if(node.parent.left == node){
                 let brother = node.parent.right;
                 if(brother.color == Color.RED){
@@ -175,6 +175,7 @@ export class RBTree{
                     node.parent.color = Color.RED;
                     this.leftRotate(node.parent);
                     brother.right.color = Color.BLACK;
+                    break;
                 } 
             }else{
                 let brother = node.parent.left;
@@ -198,6 +199,7 @@ export class RBTree{
                     node.parent.color = Color.RED;
                     this.rightRotate(node.parent);
                     brother.left.color = Color.BLACK;
+                    break;
                 }
                 
             }                                                                                                                                          
