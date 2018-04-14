@@ -89,33 +89,28 @@ export class RBTree{
                     parent.parent.color = Color.RED;
                     parent.color = Color.BLACK;
                     this.rightRotate(parent.parent)
-                     
                 }
             }else{
                 if(parent.parent.left.color == Color.RED){
                     parent.color = Color.BLACK;
                     parent.parent.left.color = Color.BLACK;
                     parent.parent.color = Color.RED;
-                    parent = parent.parent;
+                    insert = insert.parent.parent;
                 }else{
                     if(parent.left == insert){
                         insert = parent;
                         this.rightRotate(parent);
-                      
-                    }else{
-                        parent.parent.color = Color.RED;
-                        parent.color = Color.BLACK;
-                        this.leftRotate(parent.parent)
                     }
+                    parent.parent.color = Color.RED;
+                    parent.color = Color.BLACK;
+                    this.leftRotate(parent.parent)
                 }
             }
         }
         this.root.color = Color.BLACK;
     }
 
-    public treeDelete(node:number):void;
-    public treeDelete(node:RBTreeNode):void;
-    public treeDelete(node:any):void{
+    public treeDelete(node:number | RBTreeNode):void{
         let deleteNode;
         if(typeof node ==  'number'){
             deleteNode = this.treeSearch(node);
@@ -177,10 +172,11 @@ export class RBTree{
                         this.rightRotate(brother);
                         brother = node.parent.right;
                     }
-                    
-                    node.parent.color = Color.RED;
-                    this.leftRotate(node.parent);
+                    brother.color =  node.parent.color;
+                    node.parent.color = Color.BLACK;
                     brother.right.color = Color.BLACK;
+                    this.leftRotate(node.parent);
+                   
                     break;
                 } 
             }else{
@@ -202,9 +198,10 @@ export class RBTree{
                         brother = node.parent.right;
                     }
                     
-                    node.parent.color = Color.RED;
-                    this.rightRotate(node.parent);
+                    brother.color =  node.parent.color;
+                    node.parent.color = Color.BLACK;
                     brother.left.color = Color.BLACK;
+                    this.rightRotate(node.parent);
                     break;
                 }
                 
@@ -233,7 +230,7 @@ export class RBTree{
     }
 
     private leftRotate(node:RBTreeNode){
-        if(node.right != this.NIL){
+        if(node.right == this.NIL){
             return;
         }
            
@@ -258,7 +255,7 @@ export class RBTree{
     }
 
     private rightRotate(node:RBTreeNode){
-        if(node.left != this.NIL){
+        if(node.left == this.NIL){
             return;
         }
            

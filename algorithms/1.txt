@@ -1,0 +1,1635 @@
+
+> httpserver@1.0.0 test-rbtree E:\code\algorithms\Single-learn\algorithms
+> mocha  dist/test/binary-search-tree/rbtree-test.js
+
+
+
+  红黑树测试
+    简单插入测试
+      √ 001_输入节点为null
+      √ 002_只有一个父节点
+      √ 004_一个父节点和左节点
+      √ 005_一个父节点和右节点
+      √ 006_一个父节点和一个左节点，右节点
+      √ 007_一个父节点和多个子节点
+      √ 008_一个父节点和多个左节点，无右节点
+      √ 00_9一个父节点和多个右节点，无左节点
+    删除测试
+      1) 删除只有一个节点的rbtree
+      2) 删除不存在的节点
+      3) 删除末尾红色左节点
+      4) 删除末尾红色右节点
+      √ 删除末尾黑色左节点,兄弟节点为黑色，兄弟节点的右子节点为红色
+      √ 删除末尾黑色左节点,兄弟节点为黑色，兄弟节点的左子节点为红色
+      √ 删除末尾黑色右节点,兄弟节点为黑色，兄弟节点的左子节点红色
+      √ 删除末尾黑色右节点,兄弟节点为黑色，兄弟节点的右子节点红色
+      5) 删除末尾黑色节点，并且兄弟节点也为黑色，兄弟节点的子节点全部为黑色
+      6) 删除有左右内部节点的节点，且右侧树最小节点为红色
+      7) 删除有左右内部节点的节点，且右侧树最小节点为黑色，且 右侧最小节点的父节点为删除的节点
+      8) 删除有左右内部节点的节点，且右侧树最小节点为黑色，且 右侧最小节点的父节点不为删除的节点
+      9) 删除父节点
+
+
+  12 passing (20ms)
+  9 failing
+
+  1) 红黑树测试
+       删除测试
+         删除只有一个节点的rbtree:
+     TypeError: Cannot read property 'color' of null
+      at RBTree.rbTreeDeleteFixup (dist\binary-search-tree\rb-tree.js:177:29)
+      at RBTree.treeDelete (dist\binary-search-tree\rb-tree.js:145:18)
+      at Context.it (dist\test\binary-search-tree\rbtree-test.js:199:15)
+
+  2) 红黑树测试
+       删除测试
+         删除不存在的节点:
+
+      AssertionError: expected { Object (parent, left, ...) } to deeply equal { Object (parent, left, ...) }
+      + expected - actual
+
+       {
+      -  "color": 0
+      +  "color": 1
+         "left": {
+           "color": 1
+           "left": [null]
+           "parent": [null]
+      
+      at Proxy.assertEqual (node_modules\chai\lib\chai\core\assertions.js:1020:19)
+      at Proxy.methodWrapper (node_modules\chai\lib\chai\utils\addMethod.js:57:25)
+      at Context.it (dist\test\binary-search-tree\rbtree-test.js:206:104)
+
+  3) 红黑树测试
+       删除测试
+         删除末尾红色左节点:
+
+      AssertionError: expected { Object (parent, left, ...) } to deeply equal { Object (parent, left, ...) }
+      + expected - actual
+
+         "color": 1
+         "left": {
+           "color": 1
+           "left": [null]
+      -    "parent": {
+      -      "color": 1
+      -      "left": [Circular]
+      -      "parent": [Circular]
+      -      "right": {
+      -        "color": 0
+      -        "left": [Circular]
+      -        "parent": [Circular]
+      -        "right": [Circular]
+      -        "value": 7
+      -      }
+      -      "value": 6
+      -    }
+      +    "parent": [Circular]
+           "right": [null]
+           "value": [null]
+         }
+         "parent": {
+           "color": 1
+           "left": [null]
+      -    "parent": {
+      -      "color": 1
+      -      "left": [Circular]
+      -      "parent": [Circular]
+      -      "right": {
+      -        "color": 0
+      -        "left": [Circular]
+      -        "parent": [Circular]
+      -        "right": [Circular]
+      -        "value": 7
+      -      }
+      -      "value": 6
+      -    }
+      +    "parent": [Circular]
+           "right": [null]
+           "value": [null]
+         }
+         "right": {
+      -    "color": 1
+      +    "color": 0
+           "left": {
+             "color": 1
+             "left": [null]
+      -      "parent": {
+      -        "color": 1
+      -        "left": [Circular]
+      -        "parent": [Circular]
+      -        "right": {
+      -          "color": 0
+      -          "left": [Circular]
+      -          "parent": [Circular]
+      -          "right": [Circular]
+      -          "value": 7
+      -        }
+      -        "value": 6
+      -      }
+      +      "parent": [Circular]
+             "right": [null]
+             "value": [null]
+           }
+           "parent": [Circular]
+           "right": {
+             "color": 1
+             "left": [null]
+      -      "parent": {
+      -        "color": 1
+      -        "left": [Circular]
+      -        "parent": [Circular]
+      -        "right": {
+      -          "color": 0
+      -          "left": [Circular]
+      -          "parent": [Circular]
+      -          "right": [Circular]
+      -          "value": 7
+      -        }
+      -        "value": 6
+      -      }
+      +      "parent": [Circular]
+             "right": [null]
+             "value": [null]
+           }
+           "value": 7
+      
+      at Proxy.assertEqual (node_modules\chai\lib\chai\core\assertions.js:1020:19)
+      at Proxy.methodWrapper (node_modules\chai\lib\chai\utils\addMethod.js:57:25)
+      at Context.it (dist\test\binary-search-tree\rbtree-test.js:217:44)
+
+  4) 红黑树测试
+       删除测试
+         删除末尾红色右节点:
+
+      AssertionError: expected { Object (parent, left, ...) } to deeply equal { Object (parent, left, ...) }
+      + expected - actual
+
+       {
+         "color": 1
+         "left": {
+      -    "color": 1
+      +    "color": 0
+           "left": {
+             "color": 1
+             "left": [null]
+      -      "parent": {
+      -        "color": 1
+      -        "left": {
+      -          "color": 0
+      -          "left": [Circular]
+      -          "parent": [Circular]
+      -          "right": [Circular]
+      -          "value": 5
+      -        }
+      -        "parent": [Circular]
+      -        "right": [Circular]
+      -        "value": 6
+      -      }
+      +      "parent": [Circular]
+             "right": [null]
+             "value": [null]
+           }
+           "parent": [Circular]
+           "right": {
+             "color": 1
+             "left": [null]
+      -      "parent": {
+      -        "color": 1
+      -        "left": {
+      -          "color": 0
+      -          "left": [Circular]
+      -          "parent": [Circular]
+      -          "right": [Circular]
+      -          "value": 5
+      -        }
+      -        "parent": [Circular]
+      -        "right": [Circular]
+      -        "value": 6
+      -      }
+      +      "parent": [Circular]
+             "right": [null]
+             "value": [null]
+           }
+           "value": 5
+         }
+         "parent": {
+           "color": 1
+           "left": [null]
+      -    "parent": {
+      -      "color": 1
+      -      "left": {
+      -        "color": 0
+      -        "left": [Circular]
+      -        "parent": [Circular]
+      -        "right": [Circular]
+      -        "value": 5
+      -      }
+      -      "parent": [Circular]
+      -      "right": [Circular]
+      -      "value": 6
+      -    }
+      +    "parent": [Circular]
+           "right": [null]
+           "value": [null]
+         }
+         "right": {
+           "color": 1
+           "left": [null]
+      -    "parent": {
+      -      "color": 1
+      -      "left": {
+      -        "color": 0
+      -        "left": [Circular]
+      -        "parent": [Circular]
+      -        "right": [Circular]
+      -        "value": 5
+      -      }
+      -      "parent": [Circular]
+      -      "right": [Circular]
+      -      "value": 6
+      -    }
+      +    "parent": [Circular]
+           "right": [null]
+           "value": [null]
+         }
+         "value": 6
+      
+      at Proxy.assertEqual (node_modules\chai\lib\chai\core\assertions.js:1020:19)
+      at Proxy.methodWrapper (node_modules\chai\lib\chai\utils\addMethod.js:57:25)
+      at Context.it (dist\test\binary-search-tree\rbtree-test.js:228:44)
+
+  5) 红黑树测试
+       删除测试
+         删除末尾黑色节点，并且兄弟节点也为黑色，兄弟节点的子节点全部为黑色:
+
+      AssertionError: expected { Object (parent, left, ...) } to deeply equal { Object (parent, left, ...) }
+      + expected - actual
+
+         "color": 1
+         "left": {
+           "color": 1
+           "left": [null]
+      -    "parent": {
+      -      "color": 1
+      -      "left": [Circular]
+      -      "parent": [Circular]
+      -      "right": {
+      -        "color": 0
+      -        "left": [Circular]
+      -        "parent": [Circular]
+      -        "right": [Circular]
+      -        "value": 6
+      -      }
+      -      "value": 5
+      -    }
+      +    "parent": [Circular]
+           "right": [null]
+           "value": [null]
+         }
+         "parent": {
+           "color": 1
+           "left": [null]
+      -    "parent": {
+      -      "color": 1
+      -      "left": [Circular]
+      -      "parent": [Circular]
+      -      "right": {
+      -        "color": 0
+      -        "left": [Circular]
+      -        "parent": [Circular]
+      -        "right": [Circular]
+      -        "value": 6
+      -      }
+      -      "value": 5
+      -    }
+      +    "parent": [Circular]
+           "right": [null]
+           "value": [null]
+         }
+         "right": {
+      -    "color": 1
+      +    "color": 0
+           "left": {
+             "color": 1
+             "left": [null]
+      -      "parent": {
+      -        "color": 1
+      -        "left": [Circular]
+      -        "parent": [Circular]
+      -        "right": {
+      -          "color": 0
+      -          "left": [Circular]
+      -          "parent": [Circular]
+      -          "right": [Circular]
+      -          "value": 6
+      -        }
+      -        "value": 5
+      -      }
+      +      "parent": [Circular]
+             "right": [null]
+             "value": [null]
+           }
+           "parent": [Circular]
+           "right": {
+             "color": 1
+             "left": [null]
+      -      "parent": {
+      -        "color": 1
+      -        "left": [Circular]
+      -        "parent": [Circular]
+      -        "right": {
+      -          "color": 0
+      -          "left": [Circular]
+      -          "parent": [Circular]
+      -          "right": [Circular]
+      -          "value": 6
+      -        }
+      -        "value": 5
+      -      }
+      +      "parent": [Circular]
+             "right": [null]
+             "value": [null]
+           }
+           "value": 6
+      
+      at Proxy.assertEqual (node_modules\chai\lib\chai\core\assertions.js:1020:19)
+      at Proxy.methodWrapper (node_modules\chai\lib\chai\utils\addMethod.js:57:25)
+      at Context.it (dist\test\binary-search-tree\rbtree-test.js:297:44)
+
+  6) 红黑树测试
+       删除测试
+         删除有左右内部节点的节点，且右侧树最小节点为红色:
+
+      AssertionError: expected { Object (parent, left, ...) } to deeply equal { Object (parent, left, ...) }
+      + expected - actual
+
+               "color": 1
+               "left": [Circular]
+               "parent": {
+                 "color": 1
+      -          "left": {
+      -            "color": 1
+      -            "left": [Circular]
+      -            "parent": [Circular]
+      -            "right": [Circular]
+      -            "value": 4
+      -          }
+      +          "left": [Circular]
+                 "parent": [Circular]
+                 "right": [Circular]
+                 "value": 6
+               }
+--
+               "value": 6
+             }
+             "right": {
+               "color": 1
+      -        "left": {
+      +        "left": [Circular]
+      +        "parent": [Circular]
+      +        "right": {
+                 "color": 1
+                 "left": [Circular]
+                 "parent": [Circular]
+                 "right": [Circular]
+      -          "value": 4
+      +          "value": 6
+               }
+      -        "parent": [Circular]
+      -        "right": {
+      +        "value": 6
+      +      }
+      +      "value": [null]
+      +    }
+      +    "parent": {
+      +      "color": 1
+      +      "left": [Circular]
+      +      "parent": {
+      +        "color": 1
+      +        "left": [null]
+      +        "parent": {
+                 "color": 1
+                 "left": [Circular]
+                 "parent": [Circular]
+                 "right": [Circular]
+                 "value": 6
+               }
+      +        "right": [Circular]
+      +        "value": [null]
+      +      }
+      +      "right": {
+      +        "color": 1
+      +        "left": {
+      +          "color": 1
+      +          "left": [null]
+      +          "parent": [Circular]
+      +          "right": [Circular]
+      +          "value": [null]
+      +        }
+      +        "parent": [Circular]
+      +        "right": {
+      +          "color": 1
+      +          "left": [null]
+      +          "parent": [Circular]
+      +          "right": [Circular]
+      +          "value": [null]
+      +        }
+               "value": 6
+             }
+      -      "value": [null]
+      +      "value": 6
+           }
+      -    "parent": [Circular]
+           "right": {
+             "color": 1
+             "left": [null]
+             "parent": {
+               "color": 1
+               "left": [Circular]
+               "parent": {
+                 "color": 1
+      -          "left": {
+      -            "color": 1
+      -            "left": [Circular]
+      -            "parent": [Circular]
+      -            "right": [Circular]
+      -            "value": 4
+      -          }
+      +          "left": [Circular]
+                 "parent": [Circular]
+                 "right": [Circular]
+                 "value": 6
+               }
+--
+               "value": 6
+             }
+             "right": {
+               "color": 1
+      -        "left": {
+      -          "color": 1
+      -          "left": [Circular]
+      -          "parent": [Circular]
+      -          "right": [Circular]
+      -          "value": 4
+      -        }
+      +        "left": [Circular]
+               "parent": [Circular]
+               "right": {
+                 "color": 1
+                 "left": [Circular]
+--
+           "color": 1
+           "left": {
+             "color": 1
+             "left": [null]
+      -      "parent": {
+      +      "parent": [Circular]
+      +      "right": {
+               "color": 1
+      -        "left": [Circular]
+      -        "parent": {
+      +        "left": {
+                 "color": 1
+      -          "left": {
+      -            "color": 1
+      -            "left": [Circular]
+      -            "parent": [Circular]
+      -            "right": [Circular]
+      -            "value": 4
+      -          }
+      +          "left": [Circular]
+                 "parent": [Circular]
+                 "right": [Circular]
+      -          "value": 6
+      +          "value": 4
+               }
+      +        "parent": [Circular]
+               "right": [Circular]
+               "value": 6
+             }
+      -      "right": {
+      +      "value": [null]
+      +    }
+      +    "parent": {
+      +      "color": 1
+      +      "left": {
+               "color": 1
+               "left": {
+                 "color": 1
+      -          "left": [Circular]
+      +          "left": [null]
+                 "parent": [Circular]
+                 "right": [Circular]
+      -          "value": 4
+      +          "value": [null]
+               }
+               "parent": [Circular]
+               "right": {
+                 "color": 1
+      -          "left": [Circular]
+      +          "left": [null]
+                 "parent": [Circular]
+                 "right": [Circular]
+      -          "value": 6
+      +          "value": [null]
+               }
+      -        "value": 6
+      +        "value": 4
+             }
+      -      "value": [null]
+      +      "parent": {
+      +        "color": 1
+      +        "left": [null]
+      +        "parent": [Circular]
+      +        "right": [Circular]
+      +        "value": [null]
+      +      }
+      +      "right": [Circular]
+      +      "value": 6
+           }
+      -    "parent": [Circular]
+           "right": {
+             "color": 1
+             "left": [null]
+      -      "parent": {
+      -        "color": 1
+      -        "left": [Circular]
+      -        "parent": {
+      -          "color": 1
+      -          "left": {
+      -            "color": 1
+      -            "left": [Circular]
+      -            "parent": [Circular]
+      -            "right": [Circular]
+      -            "value": 4
+      -          }
+      -          "parent": [Circular]
+      -          "right": [Circular]
+      -          "value": 6
+      -        }
+      -        "right": [Circular]
+      -        "value": 6
+      -      }
+      +      "parent": [Circular]
+             "right": {
+               "color": 1
+               "left": {
+                 "color": 1
+--
+                 "right": [Circular]
+                 "value": 4
+               }
+               "parent": [Circular]
+      -        "right": {
+      -          "color": 1
+      -          "left": [Circular]
+      -          "parent": [Circular]
+      -          "right": [Circular]
+      -          "value": 6
+      -        }
+      +        "right": [Circular]
+               "value": 6
+             }
+             "value": [null]
+           }
+           "value": 6
+         }
+      -  "value": 6
+      +  "value": 5
+       }
+      
+      at Proxy.assertEqual (node_modules\chai\lib\chai\core\assertions.js:1020:19)
+      at Proxy.methodWrapper (node_modules\chai\lib\chai\utils\addMethod.js:57:25)
+      at Context.it (dist\test\binary-search-tree\rbtree-test.js:311:44)
+
+  7) 红黑树测试
+       删除测试
+         删除有左右内部节点的节点，且右侧树最小节点为黑色，且 右侧最小节点的父节点为删除的节点:
+     TypeError: Cannot read property 'color' of null
+      at RBTree.rbTreeDeleteFixup (dist\binary-search-tree\rb-tree.js:177:29)
+      at RBTree.treeDelete (dist\binary-search-tree\rb-tree.js:145:18)
+      at Context.it (dist\test\binary-search-tree\rbtree-test.js:320:15)
+
+  8) 红黑树测试
+       删除测试
+         删除有左右内部节点的节点，且右侧树最小节点为黑色，且 右侧最小节点的父节点不为删除的节点:
+
+      AssertionError: expected { Object (parent, left, ...) } to deeply equal { Object (parent, left, ...) }
+      + expected - actual
+
+                 "color": 0
+                 "left": [Circular]
+                 "parent": {
+                   "color": 1
+      -            "left": {
+      -              "color": 1
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 10
+      -            }
+      +            "left": [Circular]
+                   "parent": [Circular]
+                   "right": [Circular]
+                   "value": 18
+                 }
+--
+               "value": 20
+             }
+             "right": {
+               "color": 1
+      -        "left": {
+      -          "color": 1
+      -          "left": [Circular]
+      -          "parent": [Circular]
+      -          "right": [Circular]
+      -          "value": 10
+      -        }
+      +        "left": [Circular]
+               "parent": [Circular]
+               "right": {
+                 "color": 0
+                 "left": {
+--
+               "value": 18
+             }
+             "value": [null]
+           }
+      -    "parent": [Circular]
+      -    "right": {
+      +    "parent": {
+             "color": 1
+      -      "left": [null]
+      +      "left": [Circular]
+             "parent": {
+               "color": 1
+      -        "left": [Circular]
+      +        "left": [null]
+               "parent": {
+      -          "color": 0
+      +          "color": 1
+                 "left": [Circular]
+                 "parent": {
+      +            "color": 0
+      +            "left": [Circular]
+      +            "parent": [Circular]
+      +            "right": {
+      +              "color": 1
+      +              "left": [Circular]
+      +              "parent": [Circular]
+      +              "right": [Circular]
+      +              "value": 28
+      +            }
+      +            "value": 25
+      +          }
+      +          "right": [Circular]
+      +          "value": 20
+      +        }
+      +        "right": [Circular]
+      +        "value": [null]
+      +      }
+      +      "right": {
+      +        "color": 0
+      +        "left": {
+      +          "color": 1
+      +          "left": {
+                   "color": 1
+      -            "left": {
+      +            "left": [null]
+      +            "parent": [Circular]
+      +            "right": [Circular]
+      +            "value": [null]
+      +          }
+      +          "parent": [Circular]
+      +          "right": {
+      +            "color": 1
+      +            "left": [null]
+      +            "parent": [Circular]
+      +            "right": [Circular]
+      +            "value": [null]
+      +          }
+      +          "value": 20
+      +        }
+      +        "parent": [Circular]
+      +        "right": {
+      +          "color": 1
+      +          "left": {
+      +            "color": 1
+      +            "left": [null]
+      +            "parent": {
+                     "color": 1
+                     "left": [Circular]
+                     "parent": [Circular]
+                     "right": [Circular]
+      -              "value": 10
+      +              "value": 20
+                   }
+      +            "right": [Circular]
+      +            "value": [null]
+      +          }
+      +          "parent": [Circular]
+      +          "right": {
+      +            "color": 1
+      +            "left": [null]
+      +            "parent": {
+      +              "color": 1
+      +              "left": [Circular]
+      +              "parent": [Circular]
+      +              "right": [Circular]
+      +              "value": 20
+      +            }
+      +            "right": [Circular]
+      +            "value": [null]
+      +          }
+      +          "value": 28
+      +        }
+      +        "value": 25
+      +      }
+      +      "value": 18
+      +    }
+      +    "right": {
+      +      "color": 1
+      +      "left": [null]
+      +      "parent": {
+      +        "color": 1
+      +        "left": [Circular]
+      +        "parent": {
+      +          "color": 0
+      +          "left": [Circular]
+      +          "parent": {
+      +            "color": 1
+      +            "left": [Circular]
+                   "parent": [Circular]
+                   "right": [Circular]
+                   "value": 18
+                 }
+--
+               "value": 20
+             }
+             "right": {
+               "color": 1
+      -        "left": {
+      -          "color": 1
+      -          "left": [Circular]
+      -          "parent": [Circular]
+      -          "right": [Circular]
+      -          "value": 10
+      -        }
+      +        "left": [Circular]
+               "parent": [Circular]
+               "right": {
+                 "color": 0
+                 "left": {
+--
+           }
+           "value": [null]
+         }
+         "right": {
+      -    "color": 0
+      +    "color": 1
+           "left": {
+             "color": 1
+      -      "left": {
+      +      "left": [null]
+      +      "parent": [Circular]
+      +      "right": {
+               "color": 1
+      -        "left": [null]
+      -        "parent": {
+      +        "left": {
+                 "color": 1
+                 "left": [Circular]
+      -          "parent": {
+      -            "color": 0
+      -            "left": [Circular]
+      -            "parent": {
+      -              "color": 1
+      -              "left": {
+      -                "color": 1
+      -                "left": [Circular]
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 10
+      -              }
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 18
+      -            }
+      -            "right": {
+      -              "color": 1
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 28
+      -            }
+      -            "value": 25
+      -          }
+      +          "parent": [Circular]
+                 "right": [Circular]
+      -          "value": 20
+      +          "value": 10
+               }
+      +        "parent": [Circular]
+               "right": {
+      -          "color": 1
+      -          "left": {
+      +          "color": 0
+      +          "left": [Circular]
+      +          "parent": [Circular]
+      +          "right": {
+                   "color": 1
+                   "left": [Circular]
+                   "parent": [Circular]
+                   "right": [Circular]
+      -            "value": 10
+      +            "value": 28
+                 }
+      -          "parent": [Circular]
+      -          "right": {
+      -            "color": 0
+      -            "left": {
+      -              "color": 1
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 20
+      -            }
+      -            "parent": [Circular]
+      -            "right": {
+      -              "color": 1
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 28
+      -            }
+      -            "value": 25
+      -          }
+      -          "value": 18
+      +          "value": 25
+               }
+      -        "value": [null]
+      +        "value": 18
+             }
+      -      "parent": [Circular]
+      -      "right": {
+      +      "value": [null]
+      +    }
+      +    "parent": {
+      +      "color": 0
+      +      "left": [Circular]
+      +      "parent": {
+               "color": 1
+      -        "left": [null]
+      -        "parent": {
+      +        "left": {
+                 "color": 1
+      -          "left": [Circular]
+      -          "parent": {
+      -            "color": 0
+      -            "left": [Circular]
+      -            "parent": {
+      -              "color": 1
+      -              "left": {
+      -                "color": 1
+      -                "left": [Circular]
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 10
+      -              }
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 18
+      -            }
+      -            "right": {
+      -              "color": 1
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 28
+      -            }
+      -            "value": 25
+      -          }
+      -          "right": [Circular]
+      -          "value": 20
+      -        }
+      -        "right": {
+      -          "color": 1
+                 "left": {
+                   "color": 1
+      -            "left": [Circular]
+      +            "left": [null]
+                   "parent": [Circular]
+                   "right": [Circular]
+      -            "value": 10
+      +            "value": [null]
+                 }
+                 "parent": [Circular]
+                 "right": {
+      -            "color": 0
+      -            "left": {
+      -              "color": 1
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 20
+      -            }
+      +            "color": 1
+      +            "left": [null]
+                   "parent": [Circular]
+      -            "right": {
+      -              "color": 1
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 28
+      -            }
+      -            "value": 25
+      +            "right": [Circular]
+      +            "value": [null]
+                 }
+      -          "value": 18
+      +          "value": 10
+               }
+      -        "value": [null]
+      +        "parent": {
+      +          "color": 1
+      +          "left": [null]
+      +          "parent": [Circular]
+      +          "right": [Circular]
+      +          "value": [null]
+      +        }
+      +        "right": [Circular]
+      +        "value": 18
+             }
+      -      "value": 20
+      -    }
+      -    "parent": [Circular]
+      -    "right": {
+      -      "color": 1
+      -      "left": {
+      +      "right": {
+               "color": 1
+      -        "left": [null]
+      -        "parent": {
+      +        "left": {
+                 "color": 1
+      -          "left": [Circular]
+      -          "parent": {
+      -            "color": 0
+      -            "left": [Circular]
+      -            "parent": {
+      +          "left": [null]
+      +          "parent": [Circular]
+      +          "right": {
+      +            "color": 1
+      +            "left": {
+                     "color": 1
+      -              "left": {
+      -                "color": 1
+      -                "left": [Circular]
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 10
+      -              }
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 18
+      -            }
+      -            "right": {
+      -              "color": 1
+                     "left": [Circular]
+                     "parent": [Circular]
+                     "right": [Circular]
+      -              "value": 28
+      +              "value": 10
+                   }
+      -            "value": 25
+      +            "parent": [Circular]
+      +            "right": [Circular]
+      +            "value": 18
+                 }
+      -          "right": [Circular]
+      -          "value": 20
+      +          "value": [null]
+               }
+      +        "parent": [Circular]
+               "right": {
+                 "color": 1
+      -          "left": {
+      -            "color": 1
+      -            "left": [Circular]
+      -            "parent": [Circular]
+      -            "right": [Circular]
+      -            "value": 10
+      -          }
+      +          "left": [null]
+                 "parent": [Circular]
+                 "right": {
+      -            "color": 0
+      +            "color": 1
+                   "left": {
+                     "color": 1
+                     "left": [Circular]
+                     "parent": [Circular]
+                     "right": [Circular]
+      -              "value": 20
+      +              "value": 10
+                   }
+                   "parent": [Circular]
+      -            "right": {
+      -              "color": 1
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 28
+      -            }
+      -            "value": 25
+      +            "right": [Circular]
+      +            "value": 18
+                 }
+      -          "value": 18
+      +          "value": [null]
+               }
+      -        "value": [null]
+      +        "value": 28
+             }
+      +      "value": 25
+      +    }
+      +    "right": {
+      +      "color": 1
+      +      "left": [null]
+             "parent": [Circular]
+             "right": {
+               "color": 1
+      -        "left": [null]
+      -        "parent": {
+      +        "left": {
+                 "color": 1
+                 "left": [Circular]
+      -          "parent": {
+      -            "color": 0
+      -            "left": [Circular]
+      -            "parent": {
+      -              "color": 1
+      -              "left": {
+      -                "color": 1
+      -                "left": [Circular]
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 10
+      -              }
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 18
+      -            }
+      -            "right": {
+      -              "color": 1
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 28
+      -            }
+      -            "value": 25
+      -          }
+      +          "parent": [Circular]
+                 "right": [Circular]
+      -          "value": 20
+      +          "value": 10
+               }
+      +        "parent": [Circular]
+               "right": {
+      -          "color": 1
+      -          "left": {
+      +          "color": 0
+      +          "left": [Circular]
+      +          "parent": [Circular]
+      +          "right": {
+                   "color": 1
+                   "left": [Circular]
+                   "parent": [Circular]
+                   "right": [Circular]
+      -            "value": 10
+      +            "value": 28
+                 }
+      -          "parent": [Circular]
+      -          "right": {
+      -            "color": 0
+      -            "left": {
+      -              "color": 1
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 20
+      -            }
+      -            "parent": [Circular]
+      -            "right": {
+      -              "color": 1
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 28
+      -            }
+      -            "value": 25
+      -          }
+      -          "value": 18
+      +          "value": 25
+               }
+      -        "value": [null]
+      +        "value": 18
+             }
+      -      "value": 28
+      +      "value": [null]
+           }
+      -    "value": 25
+      +    "value": 20
+         }
+      -  "value": 18
+      +  "value": 15
+       }
+      
+      at Proxy.assertEqual (node_modules\chai\lib\chai\core\assertions.js:1020:19)
+      at Proxy.methodWrapper (node_modules\chai\lib\chai\utils\addMethod.js:57:25)
+      at Context.it (dist\test\binary-search-tree\rbtree-test.js:344:44)
+
+  9) 红黑树测试
+       删除测试
+         删除父节点:
+
+      AssertionError: expected { Object (parent, left, ...) } to deeply equal { Object (parent, left, ...) }
+      + expected - actual
+
+                 "left": [null]
+                 "parent": [null]
+                 "right": {
+                   "color": 1
+      -            "left": {
+      -              "color": 0
+      -              "left": {
+      -                "color": 1
+      -                "left": {
+      -                  "color": 0
+      -                  "left": [Circular]
+      -                  "parent": [Circular]
+      -                  "right": [Circular]
+      -                  "value": 1
+      -                }
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 2
+      -              }
+      -              "parent": [Circular]
+      -              "right": {
+      -                "color": 1
+      -                "left": {
+      -                  "color": 0
+      -                  "left": [Circular]
+      -                  "parent": [Circular]
+      -                  "right": [Circular]
+      -                  "value": 4
+      -                }
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 4
+      -              }
+      -              "value": 3
+      -            }
+      +            "left": [Circular]
+                   "parent": [Circular]
+                   "right": {
+                     "color": 1
+                     "left": [Circular]
+--
+                 "left": [null]
+                 "parent": [null]
+                 "right": {
+                   "color": 1
+      -            "left": {
+      -              "color": 0
+      -              "left": {
+      -                "color": 1
+      -                "left": {
+      -                  "color": 0
+      -                  "left": [Circular]
+      -                  "parent": [Circular]
+      -                  "right": [Circular]
+      -                  "value": 1
+      -                }
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 2
+      -              }
+      -              "parent": [Circular]
+      -              "right": {
+      -                "color": 1
+      -                "left": {
+      -                  "color": 0
+      -                  "left": [Circular]
+      -                  "parent": [Circular]
+      -                  "right": [Circular]
+      -                  "value": 4
+      -                }
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 4
+      -              }
+      -              "value": 3
+      -            }
+      +            "left": [Circular]
+                   "parent": [Circular]
+                   "right": {
+                     "color": 1
+                     "left": [Circular]
+--
+               "left": [null]
+               "parent": [null]
+               "right": {
+                 "color": 1
+      -          "left": {
+      -            "color": 0
+      -            "left": {
+      -              "color": 1
+      -              "left": {
+      -                "color": 0
+      -                "left": [Circular]
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 1
+      -              }
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 2
+      -            }
+      -            "parent": [Circular]
+      -            "right": {
+      -              "color": 1
+      -              "left": {
+      -                "color": 0
+      -                "left": [Circular]
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 4
+      -              }
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 4
+      -            }
+      -            "value": 3
+      -          }
+      +          "left": [Circular]
+                 "parent": [Circular]
+                 "right": {
+                   "color": 1
+                   "left": [Circular]
+--
+               "value": [null]
+             }
+             "value": 2
+           }
+      -    "parent": [Circular]
+      +    "parent": {
+      +      "color": 1
+      +      "left": [Circular]
+      +      "parent": {
+      +        "color": 1
+      +        "left": [null]
+      +        "parent": [null]
+      +        "right": [Circular]
+      +        "value": [null]
+      +      }
+      +      "right": {
+      +        "color": 1
+      +        "left": {
+      +          "color": 1
+      +          "left": [null]
+      +          "parent": [null]
+      +          "right": [Circular]
+      +          "value": [null]
+      +        }
+      +        "parent": [Circular]
+      +        "right": {
+      +          "color": 1
+      +          "left": [null]
+      +          "parent": [null]
+      +          "right": [Circular]
+      +          "value": [null]
+      +        }
+      +        "value": 7
+      +      }
+      +      "value": 6
+      +    }
+           "right": {
+             "color": 1
+             "left": {
+               "color": 0
+--
+                 "left": [null]
+                 "parent": [null]
+                 "right": {
+                   "color": 1
+      -            "left": {
+      -              "color": 0
+      -              "left": {
+      -                "color": 1
+      -                "left": {
+      -                  "color": 0
+      -                  "left": [Circular]
+      -                  "parent": [Circular]
+      -                  "right": [Circular]
+      -                  "value": 1
+      -                }
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 2
+      -              }
+      -              "parent": [Circular]
+      -              "right": {
+      -                "color": 1
+      -                "left": {
+      -                  "color": 0
+      -                  "left": [Circular]
+      -                  "parent": [Circular]
+      -                  "right": [Circular]
+      -                  "value": 4
+      -                }
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 4
+      -              }
+      -              "value": 3
+      -            }
+      +            "left": [Circular]
+                   "parent": [Circular]
+                   "right": {
+                     "color": 1
+                     "left": [Circular]
+--
+                 "left": [null]
+                 "parent": [null]
+                 "right": {
+                   "color": 1
+      -            "left": {
+      -              "color": 0
+      -              "left": {
+      -                "color": 1
+      -                "left": {
+      -                  "color": 0
+      -                  "left": [Circular]
+      -                  "parent": [Circular]
+      -                  "right": [Circular]
+      -                  "value": 1
+      -                }
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 2
+      -              }
+      -              "parent": [Circular]
+      -              "right": {
+      -                "color": 1
+      -                "left": {
+      -                  "color": 0
+      -                  "left": [Circular]
+      -                  "parent": [Circular]
+      -                  "right": [Circular]
+      -                  "value": 4
+      -                }
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 4
+      -              }
+      -              "value": 3
+      -            }
+      +            "left": [Circular]
+                   "parent": [Circular]
+                   "right": {
+                     "color": 1
+                     "left": [Circular]
+--
+                   "value": 6
+                 }
+                 "value": [null]
+               }
+      -        "value": 1
+      +        "value": 4
+             }
+             "parent": [Circular]
+             "right": {
+               "color": 1
+               "left": [null]
+               "parent": [null]
+               "right": {
+                 "color": 1
+      -          "left": {
+      -            "color": 0
+      -            "left": {
+      -              "color": 1
+      -              "left": {
+      -                "color": 0
+      -                "left": [Circular]
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 1
+      -              }
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 2
+      -            }
+      -            "parent": [Circular]
+      -            "right": {
+      -              "color": 1
+      -              "left": {
+      -                "color": 0
+      -                "left": [Circular]
+      -                "parent": [Circular]
+      -                "right": [Circular]
+      -                "value": 4
+      -              }
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 4
+      -            }
+      -            "value": 3
+      -          }
+      +          "left": [Circular]
+                 "parent": [Circular]
+                 "right": {
+                   "color": 1
+                   "left": [Circular]
+--
+                 "value": 6
+               }
+               "value": [null]
+             }
+      -      "value": 2
+      +      "value": 4
+           }
+           "value": 3
+         }
+         "parent": {
+--
+         }
+         "right": {
+           "color": 1
+           "left": {
+      -      "color": 1
+      -      "left": [null]
+      -      "parent": [null]
+      -      "right": {
+      +      "color": 0
+      +      "left": {
+               "color": 1
+               "left": {
+                 "color": 0
+                 "left": {
+                   "color": 1
+      -            "left": {
+      -              "color": 0
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 1
+      -            }
+      -            "parent": [Circular]
+      +            "left": [null]
+      +            "parent": [null]
+                   "right": [Circular]
+      -            "value": 2
+      +            "value": [null]
+                 }
+                 "parent": [Circular]
+                 "right": {
+                   "color": 1
+      -            "left": {
+      -              "color": 0
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 4
+      -            }
+      -            "parent": [Circular]
+      +            "left": [null]
+      +            "parent": [null]
+                   "right": [Circular]
+      -            "value": 4
+      +            "value": [null]
+                 }
+      -          "value": 3
+      +          "value": 1
+               }
+               "parent": [Circular]
+               "right": {
+                 "color": 1
+      -          "left": [Circular]
+      -          "parent": [Circular]
+      +          "left": [null]
+      +          "parent": [null]
+                 "right": [Circular]
+      -          "value": 7
+      +          "value": [null]
+               }
+      -        "value": 6
+      +        "value": 2
+             }
+      -      "value": [null]
+      -    }
+      -    "parent": [Circular]
+      -    "right": {
+      -      "color": 1
+      -      "left": [null]
+      -      "parent": [null]
+      +      "parent": [Circular]
+             "right": {
+               "color": 1
+               "left": {
+                 "color": 0
+                 "left": {
+                   "color": 1
+      -            "left": {
+      -              "color": 0
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 1
+      -            }
+      -            "parent": [Circular]
+      +            "left": [null]
+      +            "parent": [null]
+                   "right": [Circular]
+      -            "value": 2
+      +            "value": [null]
+                 }
+                 "parent": [Circular]
+                 "right": {
+                   "color": 1
+      -            "left": {
+      -              "color": 0
+      -              "left": [Circular]
+      -              "parent": [Circular]
+      -              "right": [Circular]
+      -              "value": 4
+      -            }
+      -            "parent": [Circular]
+      +            "left": [null]
+      +            "parent": [null]
+                   "right": [Circular]
+      -            "value": 4
+      +            "value": [null]
+                 }
+      -          "value": 3
+      +          "value": 4
+               }
+               "parent": [Circular]
+               "right": {
+                 "color": 1
+      -          "left": [Circular]
+      -          "parent": [Circular]
+      +          "left": [null]
+      +          "parent": [null]
+                 "right": [Circular]
+      -          "value": 7
+      +          "value": [null]
+               }
+      -        "value": 6
+      +        "value": 4
+             }
+      +      "value": 3
+      +    }
+      +    "parent": {
+      +      "color": 1
+      +      "left": [null]
+      +      "parent": [null]
+      +      "right": [Circular]
+             "value": [null]
+           }
+      -    "value": 7
+      +    "right": {
+      +      "color": 1
+      +      "left": {
+      +        "color": 1
+      +        "left": [null]
+      +        "parent": [null]
+      +        "right": [Circular]
+      +        "value": [null]
+      +      }
+      +      "parent": [Circular]
+      +      "right": {
+      +        "color": 1
+      +        "left": [null]
+      +        "parent": [null]
+      +        "right": [Circular]
+      +        "value": [null]
+      +      }
+      +      "value": 7
+      +    }
+      +    "value": 6
+         }
+      -  "value": 6
+      +  "value": 5
+       }
+      
+      at Proxy.assertEqual (node_modules\chai\lib\chai\core\assertions.js:1020:19)
+      at Proxy.methodWrapper (node_modules\chai\lib\chai\utils\addMethod.js:57:25)
+      at Context.it (dist\test\binary-search-tree\rbtree-test.js:370:44)
+
+
+

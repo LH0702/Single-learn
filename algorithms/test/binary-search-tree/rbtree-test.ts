@@ -1,14 +1,14 @@
-import { expect, AssertionError,should } from 'chai';
+import { expect, AssertionError, should } from 'chai';
 import { RBTree } from '../../binary-search-tree/rb-tree';
-import { Color,RBTreeNode } from '../../binary-search-tree/tree-node';
-function generateTreeNode(value:number,color:Color,parent:RBTreeNode,left:RBTreeNode,right:RBTreeNode):RBTreeNode{
- return {
-     parent :parent,
-     left:left,
-     right:right,
-     value:value,
-     color:color
- }
+import { Color, RBTreeNode } from '../../binary-search-tree/tree-node';
+function generateTreeNode(value: number, color: Color, parent: RBTreeNode, left: RBTreeNode, right: RBTreeNode): RBTreeNode {
+    return {
+        parent: parent,
+        left: left,
+        right: right,
+        value: value,
+        color: color
+    }
 }
 
 describe('红黑树测试', () => {
@@ -151,32 +151,30 @@ describe('红黑树测试', () => {
             expect(b.NIL).to.be.deep.equal(right.left);
 
             left = root.left.left;  // root.left.left
-            expect(b.NIL).to.be.deep.equal(left.right.value);
+            expect(b.NIL).to.be.deep.equal(left.right);
             expect(1).to.be.deep.equal(left.left.value);
             expect(Color.RED).to.be.deep.equal(left.left.color);
             expect(left).to.be.deep.equal(left.left.parent);
 
             left = root.left.left.left;  // root.left.left
-            expect(b.NIL).to.be.deep.equal(left.right.value);
-            expect(b.NIL).to.be.deep.equal(left.left.value);
-         
+            expect(b.NIL).to.be.deep.equal(left.right);
+            expect(b.NIL).to.be.deep.equal(left.left);
+
             right = root.left.right
-            expect(b.NIL).to.be.deep.equal(right.right.value);
+            expect(b.NIL).to.be.deep.equal(right.right);
             expect(4).to.be.deep.equal(right.left.value);
             expect(Color.RED).to.be.deep.equal(right.left.color);
-            expect(left).to.be.deep.equal(right.left.parent);
+            expect(right).to.be.deep.equal(right.left.parent);
 
             left = root.left.right.left;  // root.left.left
-            expect(b.NIL).to.be.deep.equal(left.right.value);
-            expect(b.NIL).to.be.deep.equal(left.left.value);
+            expect(b.NIL).to.be.deep.equal(left.right);
+            expect(b.NIL).to.be.deep.equal(left.left);
             expect(4).to.be.deep.equal(left.value);
 
-            right = right.right.right;
-            expect(b.NIL).to.be.deep.equal(right.right.value);
-            expect(b.NIL).to.be.deep.equal(right.left.value);
+            right = root.right.right;
+            expect(b.NIL).to.be.deep.equal(right.right);
+            expect(b.NIL).to.be.deep.equal(right.left);
             expect(7).to.be.deep.equal(right.value);
-
-
         });
 
         it('008_一个父节点和多个左节点，无右节点', () => {
@@ -188,16 +186,16 @@ describe('红黑树测试', () => {
             b.treeInsert(1);
             expect([1, 2, 3, 4, 5]).to.be.deep.equal(b.getInOrderDisplay());
 
-            let root = generateTreeNode(4,Color.BLACK,b.NIL,b.NIL,b.NIL)
+            let root = generateTreeNode(4, Color.BLACK, b.NIL, b.NIL, b.NIL)
             root.parent = b.NIL;
 
-            let node1 = generateTreeNode(2,Color.BLACK,root,b.NIL,b.NIL)
-            let node2 = generateTreeNode(5,Color.BLACK,root,b.NIL,b.NIL)
+            let node1 = generateTreeNode(2, Color.BLACK, root, b.NIL, b.NIL)
+            let node2 = generateTreeNode(5, Color.BLACK, root, b.NIL, b.NIL)
             root.left = node1;
             root.right = node2;
 
-            let node3 = generateTreeNode(1,Color.RED,node1,b.NIL,b.NIL);
-            let node4 = generateTreeNode(3,Color.RED,node1,b.NIL,b.NIL);
+            let node3 = generateTreeNode(1, Color.RED, node1, b.NIL, b.NIL);
+            let node4 = generateTreeNode(3, Color.RED, node1, b.NIL, b.NIL);
             node1.left = node3;
             node1.right = node4;
 
@@ -212,63 +210,247 @@ describe('红黑树测试', () => {
             b.treeInsert(8);
             b.treeInsert(9);
             expect([5, 6, 7, 8, 9]).to.be.deep.equal(b.getInOrderDisplay());
+
+            let root = generateTreeNode(6, Color.BLACK, b.NIL, b.NIL, b.NIL)
+            root.parent = b.NIL;
+
+            let node1 = generateTreeNode(5, Color.BLACK, root, b.NIL, b.NIL)
+            let node2 = generateTreeNode(8, Color.BLACK, root, b.NIL, b.NIL)
+            root.left = node1;
+            root.right = node2;
+
+            let node3 = generateTreeNode(7, Color.RED, node2, b.NIL, b.NIL);
+            let node4 = generateTreeNode(9, Color.RED, node2, b.NIL, b.NIL);
+            node2.left = node3;
+            node2.right = node4;
+
+            expect(root).to.be.deep.equal(b['root']);
         });
 
 
     });
 
-//     describe('简单删除测试', () => {
+    describe('删除测试', () => {
 
-//         let b = new RBTree();
-//         b.treeInsert(15);
-//         b.treeInsert(6);
-//         b.treeInsert(7);
-//         b.treeInsert(9);
-//         b.treeInsert(13);
-//         b.treeInsert(3);
-//         b.treeInsert(4);
-//         b.treeInsert(2);
-//         b.treeInsert(18);
-//         b.treeInsert(17);
-//         b.treeInsert(20);
+        it('删除只有一个节点的rbtree', () => {
+            let b = new RBTree();
+            b.treeInsert(15);
+            b.treeDelete(15);
+            expect(b.NIL).to.be.equal(b['root']);
+           
+        });
 
-//         it(' Test insert is right', () => {
-//             expect([2, 3, 4, 6, 7, 9, 13, 15, 17, 18, 20]).to.be.deep.equal(b.getInOrderDisplay());
-//         });
+        it('删除不存在的节点', () => {
+            let b = new RBTree();
+            b.treeInsert(15);
+            b.treeDelete(2);
+            expect(generateTreeNode(15, Color.RED, b.NIL, b.NIL, b.NIL)).to.be.deep.equal(b['root']);
+        });
 
-//         it('删除没有孩子的左节点', () => {
-//             b.treeDelete(2);
-//             expect([3, 4, 6, 7, 9, 13, 15, 17, 18, 20]).to.be.deep.equal(b.getInOrderDisplay());
-//             b.treeInsert(2);
-//         });
+        it('删除末尾红色左节点', () => {
+            let b = new RBTree();
+            b.treeInsert(5);
+            b.treeInsert(6);
+            b.treeInsert(7);
+            b.treeDelete(5);
+            let root = generateTreeNode(6, Color.BLACK, b.NIL, b.NIL, b.NIL)
 
-//         it('删除不存在节点', () => {
-//             b.treeDelete(100);
-//             expect([2, 3, 4, 6, 7, 9, 13, 15, 17, 18, 20]).to.be.deep.equal(b.getInOrderDisplay());
-//         });
+            let node1 = generateTreeNode(7, Color.BLACK, root, b.NIL, b.NIL)
+            root.right= node1;
+            expect(root).to.be.deep.equal(b['root']);
+        });
 
-//         it('删除没有孩子的右节点', () => {
-//             b.treeDelete(4);
-//             expect([2, 3, 6, 7, 9, 13, 15, 17, 18, 20]).to.be.deep.equal(b.getInOrderDisplay());
-//             b.treeInsert(4);
-//         })
+        it('删除末尾红色右节点', () => {
+            let b = new RBTree();
+            b.treeInsert(5);
+            b.treeInsert(6);
+            b.treeInsert(7);
+            b.treeDelete(7);
+            let root = generateTreeNode(6, Color.BLACK, b.NIL, b.NIL, b.NIL)
 
-//         it('删除右左右孩子的节点', () => {
-//             b.treeDelete(3);
-//             expect([2, 4, 6, 7, 9, 13, 15, 17, 18, 20]).to.be.deep.equal(b.getInOrderDisplay());
-//         })
+            let node1 = generateTreeNode(5, Color.BLACK, root, b.NIL, b.NIL)
+            root.left= node1;
+            expect(root).to.be.deep.equal(b['root']);
+        })
 
-//         it('删除右左右孩子的节点', () => {
-//             b.treeDelete(6);
-//             expect([2, 4, 7, 9, 13, 15, 17, 18, 20]).to.be.deep.equal(b.getInOrderDisplay());
-//         })
+        it('删除末尾黑色左节点,兄弟节点为黑色，兄弟节点的右子节点为红色', () => {
+            let b = new RBTree();
+            b.treeInsert(5);
+            b.treeInsert(6);
+            b.treeInsert(7);
+            b.treeInsert(8);
+            b.treeDelete(5);
 
-//         it('删除根节点', () => {
-//             b.treeDelete(15);
-//             expect([2, 4, 7, 9, 13, 17, 18, 20]).to.be.deep.equal(b.getInOrderDisplay());
-//         })
-//     });
+            let root = generateTreeNode(7, Color.BLACK, b.NIL, b.NIL, b.NIL)
+
+            let node1 = generateTreeNode(6, Color.BLACK, root, b.NIL, b.NIL)
+            let node2 = generateTreeNode(8, Color.BLACK, root, b.NIL, b.NIL)
+            root.left= node1;
+            root.right= node2;
+            expect(root).to.be.deep.equal(b['root']);
+        })
+
+        it('删除末尾黑色左节点,兄弟节点为黑色，兄弟节点的左子节点为红色', () => {
+            let b = new RBTree();
+            b.treeInsert(5);
+            b.treeInsert(6);
+            b.treeInsert(7);
+            b.treeInsert(7);
+            b.treeDelete(5);
+
+            let root = generateTreeNode(7, Color.BLACK, b.NIL, b.NIL, b.NIL)
+
+            let node1 = generateTreeNode(6, Color.BLACK, root, b.NIL, b.NIL)
+            let node2 = generateTreeNode(7, Color.BLACK, root, b.NIL, b.NIL)
+            root.left= node1;
+            root.right= node2;
+            expect(root).to.be.deep.equal(b['root']);
+        })
+
+        it('删除末尾黑色右节点,兄弟节点为黑色，兄弟节点的左子节点红色', () => {
+            let b = new RBTree();
+            b.treeInsert(5);
+            b.treeInsert(6);
+            b.treeInsert(7);
+            b.treeInsert(4);
+            b.treeDelete(7);
+
+            let root = generateTreeNode(5, Color.BLACK, b.NIL, b.NIL, b.NIL)
+
+            let node1 = generateTreeNode(4, Color.BLACK, root, b.NIL, b.NIL)
+            let node2 = generateTreeNode(6, Color.BLACK, root, b.NIL, b.NIL)
+            root.left= node1;
+            root.right= node2;
+            expect(root).to.be.deep.equal(b['root']);
+        })
+
+        it('删除末尾黑色右节点,兄弟节点为黑色，兄弟节点的右子节点红色', () => {
+            let b = new RBTree();
+            b.treeInsert(5);
+            b.treeInsert(6);
+            b.treeInsert(7);
+            b.treeInsert(5);
+            b.treeDelete(7);
+
+            let root = generateTreeNode(5, Color.BLACK, b.NIL, b.NIL, b.NIL)
+
+            let node1 = generateTreeNode(5, Color.BLACK, root, b.NIL, b.NIL)
+            let node2 = generateTreeNode(6, Color.BLACK, root, b.NIL, b.NIL)
+            root.left= node1;
+            root.right= node2;
+            expect(root).to.be.deep.equal(b['root']);
+        })
+
+        it('删除末尾黑色节点，并且兄弟节点也为黑色，兄弟节点的子节点全部为黑色', () => {
+            let b = new RBTree();
+            b.treeInsert(5);
+            b.treeInsert(6);
+            b.treeInsert(7);
+            b.treeInsert(4);
+            b.treeDelete(7);
+            b.treeDelete(4);
+
+            let root = generateTreeNode(5, Color.BLACK, b.NIL, b.NIL, b.NIL)
+            let node2 = generateTreeNode(6, Color.BLACK, root, b.NIL, b.NIL)
+            root.right= node2;
+            expect(root).to.be.deep.equal(b['root']);
+        })
+
+        it('删除有左右内部节点的节点，且右侧树最小节点为红色',()=>{
+            let b = new RBTree();
+            b.treeInsert(5);
+            b.treeInsert(6);
+            b.treeInsert(4);
+            b.treeInsert(6);
+            b.treeDelete(5)
+
+            let root = generateTreeNode(6, Color.BLACK, b.NIL, b.NIL, b.NIL)
+            let node1 = generateTreeNode(6, Color.BLACK, root, b.NIL, b.NIL)
+            root.right= node1;
+            let node2 = generateTreeNode(4, Color.BLACK, root, b.NIL, b.NIL);
+            root.left= node2;
+            expect(root).to.be.deep.equal(b['root']); 
+        })
+
+        it('删除有左右内部节点的节点，且右侧树最小节点为黑色，且 右侧最小节点的父节点为删除的节点',()=>{
+            let b = new RBTree();
+            b.treeInsert(5);
+            b.treeInsert(6);
+            b.treeInsert(4);
+            b.treeInsert(7);
+            b.treeDelete(7);
+            b.treeDelete(5);
+
+            let root = generateTreeNode(6, Color.BLACK, b.NIL, b.NIL, b.NIL)
+            let node2 = generateTreeNode(4, Color.RED, root, b.NIL, b.NIL)
+            root.left= node2;
+            expect(root).to.be.deep.equal(b['root']);
+        })
+
+        
+        it('删除有左右内部节点的节点，且右侧树最小节点为黑色，且 右侧最小节点的父节点不为删除的节点',()=>{
+            let b = new RBTree();
+            b.treeInsert(15);
+            b.treeInsert(10);
+            b.treeInsert(20);
+            b.treeInsert(18);
+            b.treeInsert(25);
+            b.treeInsert(28);
+            b.treeDelete(15);
+
+            let root = generateTreeNode(18, Color.BLACK, b.NIL, b.NIL, b.NIL)
+            let node1 = generateTreeNode(10, Color.BLACK, root, b.NIL, b.NIL)
+            root.left= node1;
+
+            let node2 = generateTreeNode(25, Color.RED, root, b.NIL, b.NIL)
+            root.right= node2;
+
+            let node3 = generateTreeNode(20, Color.BLACK, root, b.NIL, b.NIL)
+            node2.left= node3;
+
+            let node4 = generateTreeNode(28, Color.BLACK, root, b.NIL, b.NIL)
+            node2.right= node4;
 
 
-// })
+            expect(root).to.be.deep.equal(b['root']);
+
+
+        })
+
+        it('删除父节点',()=>{
+            let b = new RBTree();
+            b.treeInsert(5);
+            b.treeInsert(6);
+            b.treeInsert(4);
+            b.treeInsert(7);
+            b.treeInsert(3);
+            b.treeInsert(2);
+            b.treeInsert(1);
+            b.treeInsert(4);
+            b.treeDelete(5);
+
+            let root = generateTreeNode(6, Color.BLACK, b.NIL, b.NIL, b.NIL)
+            let node1 = generateTreeNode(7, Color.BLACK, root, b.NIL, b.NIL)
+            root.right= node1;
+
+            let node2 = generateTreeNode(3, Color.RED, root, b.NIL, b.NIL);
+            root.left= node2;
+
+            let node3 = generateTreeNode(2, Color.BLACK, node2, b.NIL, b.NIL);
+            node2.left = node3;
+
+            let node4 = generateTreeNode(4, Color.BLACK, node2, b.NIL, b.NIL);
+            node2.right = node3;
+
+            let node5 = generateTreeNode(1, Color.RED, node2, b.NIL, b.NIL);
+            node3.left = node5;
+
+            let node6 = generateTreeNode(4, Color.RED, node2, b.NIL, b.NIL);
+            node4.left = node5;
+
+            expect(root).to.be.deep.equal(b['root']); 
+        })
+    });
+
+
 })
