@@ -138,6 +138,8 @@ export class RBTree{
                 this.transplant(tmp, tmp.right);
                 tmp.right = deleteNode.right;
                 tmp.right.parent = tmp;
+            }else{
+                fillNode.parent = tmp;
             }
 
             this.transplant(deleteNode, tmp);
@@ -149,6 +151,8 @@ export class RBTree{
         if(originalColor == Color.BLACK){
             this.rbTreeDeleteFixup(fillNode)
         }
+        // 保持空节点的完整性，颜色为black,其余属性全部为NULL
+        this.NIL.parent = null;
 
     }
     
@@ -160,6 +164,7 @@ export class RBTree{
                     brother.color = Color.BLACK;
                     node.parent.color = Color.RED;
                     this.leftRotate(node.parent);
+                    brother = node.parent.right;
                 }
                 
                 if(brother.left.color == Color.BLACK && brother.right.color == Color.BLACK){
@@ -185,6 +190,7 @@ export class RBTree{
                     brother.color = Color.BLACK;
                     node.parent.color = Color.RED;
                     this.rightRotate(node.parent);
+                    brother = node.parent.left;
                 }
 
                 if(brother.left.color == Color.BLACK && brother.right.color == Color.BLACK){
@@ -285,19 +291,15 @@ export class RBTree{
      * @param v 
      */                 
     private transplant(u: RBTreeNode, v: RBTreeNode){
-        if (u == null || u.parent == null) {
+        if (u.parent == this.NIL) {
            this.root = v;
-           return;
-        }
-
-        if (u.parent.left == u) {
+        }else if (u.parent.left == u) {
             u.parent.left = v;
         } else {
             u.parent.right = v
         }
-        if(v != null){
-            v.parent = u.parent;
-        }
-        
+        //如果是外部节点，外部节点的parent就改变了。
+        //为节省空间，所有的外部节点同意使用NIL
+        v.parent = u.parent;    
     }
 }
