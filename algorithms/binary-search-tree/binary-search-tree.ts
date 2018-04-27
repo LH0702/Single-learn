@@ -50,10 +50,31 @@ export class BST {
 
     }
 
-    inorderDisplayByNoStack():number[]{
+    inorderDisplayNoStack():number[]{
 
         let output:number[] = [];
         
+        let current = this.root;
+        while(current != null){
+            if(current.left == null){
+                output.push(current.value);
+                current = current.right;
+            }else{
+                let left = current.left;
+                while(left.right != null && left.right != current){
+                    left = left.right;
+                }
+
+                if(left.right == null){
+                    left.right = current;
+                    current = current.left;
+                }else{
+                    left.right = null;
+                    output.push(current.value);
+                    current = current.right;
+                }
+            }
+        }
 
         return output;
 
@@ -76,6 +97,14 @@ export class BST {
         let tmpNode = node || this.root;
         while (tmpNode.left != null) {
             tmpNode = tmpNode.left;
+        }
+        return tmpNode;
+    }
+
+    treeMaxinum(node ?:TreeNode): TreeNode{
+        let tmpNode = node || this.root;
+        while (tmpNode.right != null) {
+            tmpNode = tmpNode.right;
         }
         return tmpNode;
     }

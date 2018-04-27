@@ -50,6 +50,7 @@ describe('二叉树测试', () => {
             b.treeInsert(4);
             expect([1, 2, 3, 4, 4, 5, 6, 7]).to.be.deep.equal(b.getInOrderDisplay());
             expect([1, 2, 3, 4, 4, 5, 6, 7]).to.be.deep.equal(b.inorderDisplayByStack());
+            expect([1, 2, 3, 4, 4, 5, 6, 7]).to.be.deep.equal(b.inorderDisplayNoStack());
         });
 
         it('008_一个父节点和多个左节点，无右节点', () => {
