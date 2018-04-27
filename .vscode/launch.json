@@ -23,9 +23,14 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${file}",
-            "outFiles": [
-                "${workspaceFolder}/algorithms/dist/test/binary-search-tree/*.js"
+            "program": "${workspaceFolder}/algorithms/node_modules/mocha/bin/_mocha",
+            "args": [
+                "-u",
+                "tdd",
+                "--timeout",
+                "999999",
+                "--colors",
+                "${workspaceFolder}/algorithms/dist/test/binary-search-tree/inorder-tree-work-test.js"
             ]
         }
     ]

@@ -25,6 +25,40 @@ export class BST {
         }
     }
 
+    inorderDisplayByStack():number[]{
+
+        let output:number[] = [];
+        let treeStack: TreeNode[] = [];
+
+        function pushLeftTreeToStack(node: TreeNode) {
+            while(node !== null){
+                treeStack.push(node);
+                node = node.left;
+            }
+        }
+
+        pushLeftTreeToStack(this.root);
+        while(treeStack.length != 0){
+            let current = treeStack.pop();
+            output.push(current.value);
+            if(current.right != null){
+                pushLeftTreeToStack(current.right);
+            }
+        }
+
+        return output;
+
+    }
+
+    inorderDisplayByNoStack():number[]{
+
+        let output:number[] = [];
+        
+
+        return output;
+
+    }
+
     public treeSearch(value: number): TreeNode {
         let tmpNode = this.root
         while (tmpNode != null && tmpNode.value != value) {

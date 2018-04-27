@@ -17,3 +17,16 @@ export interface RBTreeNode extends TreeNode {
     parent: RBTreeNode,
 }
 
+export interface IntervalTreeNode extends RBTreeNode {
+    parent: IntervalTreeNode,
+    left: IntervalTreeNode,
+    right: IntervalTreeNode,
+    maxvalue:number,
+    value:Interval
+}
+
+export interface Interval {
+    low:number,
+    high:number
+}
+
