@@ -12,7 +12,7 @@ export class RBTree{
 
     public treeSearch(value: number): RBTreeNode {
         let tmpNode = this.root
-        while (tmpNode != null && tmpNode.value != value) {
+        while (tmpNode != this.NIL && tmpNode.value != value) {
             if (tmpNode.value > value) {
                 tmpNode = tmpNode.left;
             } else {

@@ -13,12 +13,26 @@ export class IntervalTree {
 
     private root: IntervalTreeNode;
 
-    intervalDelete() {
-
+    constructor(){
+        this.root = this.NIL;
     }
 
-    intervalSearch() {
+    intervalDelete(interval : Interval) {
+        
+    }
 
+    intervalSearch(interval : Interval) {
+        //TODO error
+        let tmp = this.root;
+        while(tmp != this.NIL && ! this.overlap(interval,tmp)){
+            if( tmp.maxvalue >= interval.low ){
+                tmp = tmp.left;
+            }else{
+                tmp = tmp.right;
+            }
+        }
+
+        return tmp;
     }
 
     intervalInsert() {
@@ -57,5 +71,16 @@ export class IntervalTree {
         }
 
         return true;
+    }
+
+    private generateTreeNode(value:Interval):IntervalTreeNode{
+        return {
+            parent :this.NIL,
+            left : this.NIL,
+            right :this.NIL,
+            value : value,
+            maxvalue:null,
+            color:Color.RED
+        }
     }
 }
