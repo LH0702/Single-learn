@@ -18,48 +18,113 @@ export class IntervalTree {
     }
 
     intervalDelete(interval : Interval) {
-        // let deleteNode;
-        // if(typeof node ==  'number'){
-        //     deleteNode = this.treeSearch(node);
-        // }else{
-        //     deleteNode = node;
-        // }
+        let deleteNode = this.intervalSearch(interval);
 
-        // if(deleteNode == null){
-        //     return;
-        // }
+        let fillNode, originalparant ;
+        let originalColor = deleteNode.color;
+        if (deleteNode.left == this.NIL) {
+            originalparant = deleteNode.parent;
+            fillNode = deleteNode.right;
+            this.transplant(deleteNode, deleteNode.right);
+        } else if (deleteNode.right == this.NIL) {
+            originalparant = deleteNode.parent;
+            fillNode = deleteNode.left;
+            this.transplant(deleteNode, deleteNode.left);
+        } else {
+            let tmp = this.treeMinimum(deleteNode.right);
+            originalparant = tmp.parent;
+            fillNode = tmp.right;
+            originalColor = tmp.color;
+            if (tmp.parent != deleteNode) {
+                this.transplant(tmp, tmp.right);
+                tmp.right = deleteNode.right;
+                tmp.right.parent = tmp;
+            }else{
+                fillNode.parent = tmp;
+            }
 
-        // let fillNode ;
-        // let originalColor = deleteNode.color;
-        // if (deleteNode.left == this.NIL) {
-        //     fillNode = deleteNode.right;
-        //     this.transplant(deleteNode, deleteNode.right);
-        // } else if (deleteNode.right == this.NIL) {
-        //     fillNode = deleteNode.left;
-        //     this.transplant(deleteNode, deleteNode.left);
-        // } else {
-        //     let tmp = this.treeMinimum(deleteNode.right);
-        //     fillNode = tmp.right;
-        //     originalColor = tmp.color;
-        //     if (tmp.parent != deleteNode) {
-        //         this.transplant(tmp, tmp.right);
-        //         tmp.right = deleteNode.right;
-        //         tmp.right.parent = tmp;
-        //     }else{
-        //         fillNode.parent = tmp;
-        //     }
+            this.transplant(deleteNode, tmp);
+            tmp.left = deleteNode.left;
+            deleteNode.left.parent = tmp;
+            tmp.color = deleteNode.color;
+        } 
 
-        //     this.transplant(deleteNode, tmp);
-        //     tmp.left = deleteNode.left;
-        //     deleteNode.left.parent = tmp;
-        //     tmp.color = deleteNode.color;
-        // } 
+        this.maxValueFixup(originalparant);
 
-        // if(originalColor == Color.BLACK){
-        //     this.rbTreeDeleteFixup(fillNode)
-        // }
-        // // 保持空节点的完整性，颜色为black,其余属性全部为NULL
-        // this.NIL.parent = null;
+        if(originalColor == Color.BLACK){
+            this.treeDeleteFixup(fillNode)
+        }
+        // 保持空节点的完整性，颜色为black,其余属性全部为NULL
+        this.NIL.parent = null;
+    }
+
+    public treeMinimum(node ?:IntervalTreeNode): IntervalTreeNode {
+        let tmpNode = node || this.root;
+        while (tmpNode.left != this.NIL) {
+            tmpNode = tmpNode.left;
+        }
+        return tmpNode;
+    }
+
+    private treeDeleteFixup(node:IntervalTreeNode){
+        while(node.color == Color.BLACK && node != this.root){
+            if(node.parent.left == node){
+                let brother = node.parent.right;
+                if(brother.color == Color.RED){
+                    brother.color = Color.BLACK;
+                    node.parent.color = Color.RED;
+                    this.leftRotate(node.parent);
+                    brother = node.parent.right;
+                }
+                
+                if(brother.left.color == Color.BLACK && brother.right.color == Color.BLACK){
+                    brother.color = Color.RED;
+                    node = node.parent;
+                }else{
+                    if(brother.right.color == Color.BLACK){
+                        brother.color = Color.RED;
+                        brother.left.color = Color.BLACK;
+                        this.rightRotate(brother);
+                        brother = node.parent.right;
+                    }
+                    brother.color =  node.parent.color;
+                    node.parent.color = Color.BLACK;
+                    brother.right.color = Color.BLACK;
+                    this.leftRotate(node.parent);
+                   
+                    break;
+                } 
+            }else{
+                let brother = node.parent.left;
+                if(brother.color == Color.RED){
+                    brother.color = Color.BLACK;
+                    node.parent.color = Color.RED;
+                    this.rightRotate(node.parent);
+                    brother = node.parent.left;
+                }
+
+                if(brother.left.color == Color.BLACK && brother.right.color == Color.BLACK){
+                    brother.color = Color.RED;
+                    node = node.parent;
+                }else {
+                    if(brother.left.color == Color.BLACK){
+                        brother.color = Color.RED; 
+                        brother.right.color = Color.BLACK;
+                        this.leftRotate(brother);
+                        brother = node.parent.right;
+                    }
+                    
+                    brother.color =  node.parent.color;
+                    node.parent.color = Color.BLACK;
+                    brother.left.color = Color.BLACK;
+                    this.rightRotate(node.parent);
+                    break;
+                }
+                
+            }                                                                                                                                          
+        }
+
+        node.color = Color.BLACK;
     }
 
     intervalSearch(interval : Interval) {
@@ -102,11 +167,11 @@ export class IntervalTree {
 
         //fixup maxvalue. need to execute insertMaxValueFixup first
         //and then rbinsertRBFixup. Can not inverse!
-        this.insertMaxValueFixup(insertNode);
+        this.maxValueFixup(insertNode);
         this.rbinsertRBFixup(insertNode);
     }
 
-    private insertMaxValueFixup(insertNode:IntervalTreeNode){
+    private maxValueFixup(insertNode:IntervalTreeNode){
         let tmp = insertNode;
         while(tmp != this.root){
             tmp.parent.maxvalue = this.getMaxValue(tmp.parent);
@@ -260,5 +325,23 @@ export class IntervalTree {
             maxvalue:value.high,
             color:Color.RED
         }
+    }
+
+     /**
+     * 用v 树替换 u树，成为u树父节点的子节点
+     * @param u 
+     * @param v 
+     */                 
+    private transplant(u: IntervalTreeNode, v: IntervalTreeNode){
+        if (u.parent == this.NIL) {
+           this.root = v;
+        }else if (u.parent.left == u) {
+            u.parent.left = v;
+        } else {
+            u.parent.right = v
+        }
+        //如果是外部节点，外部节点的parent就改变了。
+        //为节省空间，所有的外部节点同意使用NIL
+        v.parent = u.parent;    
     }
 }
