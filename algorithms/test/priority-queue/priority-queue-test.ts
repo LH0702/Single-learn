@@ -18,6 +18,7 @@ describe('优先队列测试', () => {
             expect(15).to.be.equal(pq.extractMin());
             expect(32).to.be.equal(pq.extractMin());
             expect(55).to.be.equal(pq.extractMin());
+            expect(0).to.be.equal(pq.length());
         });
 
         it('clear 测试', () => {
@@ -25,6 +26,7 @@ describe('优先队列测试', () => {
             pq.insert(3).insert(5).insert(9).insert([2,4,5,4,7,32,12,15,55]);
             pq.clear();
             expect(null).to.be.equal(pq.extractMin());
+            expect(0).to.be.equal(pq.length());
         });
 
 })

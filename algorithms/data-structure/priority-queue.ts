@@ -34,8 +34,13 @@ export class PriorityQueue {
         }
 
         let min = this.queue[0];
-        this.queue[0] = this.queue.pop();
-        this.minHeapify(0);
+        if (this.queue.length === 1) {
+            this.queue.pop();
+        } else {
+            this.queue[0] = this.queue.pop();
+            this.minHeapify(0);
+        }
+
         return min;
     }
 
@@ -47,7 +52,7 @@ export class PriorityQueue {
         this.queue[index] = key;
         let tmpIdx = index;
         while (tmpIdx > 0 && this.queue[this.getParent(tmpIdx)] > key) {
-            this.swap(tmpIdx,this.getParent(tmpIdx));
+            this.swap(tmpIdx, this.getParent(tmpIdx));
             tmpIdx = this.getParent(tmpIdx);
         }
 
@@ -73,7 +78,7 @@ export class PriorityQueue {
         }
 
         if (minIndex !== idx) {
-            this.swap(idx,minIndex);
+            this.swap(idx, minIndex);
             this.minHeapify(minIndex);
         }
     }
