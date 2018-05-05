@@ -6,8 +6,9 @@
   "scripts": {
     "test": "mocha --timeout 15000 dist/test/**/*.js",
     "test-1": "mocha  dist/test/Medians-and-Order-Statistics/*.js",
-    "test-bst": "mocha  dist/test/binary-search-tree/*.js",
-    "test-rbtree": "mocha  dist/test/binary-search-tree/rbtree-test.js"
+    "test-bst": "mocha  dist/test/data-structure/binary-search-tree/*.js",
+    "test-rbtree": "mocha  dist/test/data-structure/binary-search-tree/rbtree-test.js",
+    "test-priorityQueue": "mocha  dist/test/priority-queue/priority-queue-test.js"
   },
   "author": "",
   "license": "ISC",
