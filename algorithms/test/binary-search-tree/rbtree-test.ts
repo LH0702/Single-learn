@@ -1,6 +1,6 @@
 import { expect, AssertionError, should } from 'chai';
-import { RBTree } from '../../binary-search-tree/rb-tree';
-import { Color, RBTreeNode } from '../../binary-search-tree/tree-node';
+import { RBTree } from '../../data-structure/binary-search-tree/rb-tree';
+import { Color, RBTreeNode } from '../../data-structure/binary-search-tree/tree-node';
 function generateTreeNode(value: number, color: Color, parent: RBTreeNode, left: RBTreeNode, right: RBTreeNode): RBTreeNode {
     return {
         parent: parent,

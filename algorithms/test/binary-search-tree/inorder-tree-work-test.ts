@@ -1,5 +1,5 @@
 import { expect, AssertionError } from 'chai';
-import { BST } from '../../binary-search-tree/binary-search-tree';
+import { BST } from '../../data-structure/binary-search-tree/binary-search-tree';
 
 describe('二叉树测试', () => {
 
