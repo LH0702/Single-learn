@@ -1,5 +1,6 @@
 import { expect, AssertionError } from 'chai';
 import { cutRod, memoizedCutRod, buttonUPCutRod } from '../../dynamic-programming/cut-rod';
+import { MatrixChain } from '../../dynamic-programming/matrix-chain';
 
 describe('动态规划', () => {
 
@@ -60,4 +61,40 @@ describe('动态规划', () => {
 
     });
 
+    describe('matrix chain', ()=>{
+        it('test_1',() => {
+            let p = [15,10,20,50];
+            let matrixChain = new MatrixChain(p);
+            expect(17500).to.be.equal(matrixChain.matrixChainOrder());
+            expect("A1(A2A3)").to.be.equal(matrixChain.matrixChainOrder());
+        })
+
+        it('test_2',() => {
+            let p = [15,10,20,10];
+            let matrixChain = new MatrixChain(p);
+            expect(5500).to.be.equal(matrixChain.matrixChainOrder());
+            expect("A1(A2A3)").to.be.equal(matrixChain.matrixChainOrder());
+        })
+
+        it('test_3',() => {
+            let p = [5,10,20,10];
+            let matrixChain = new MatrixChain(p);
+            expect(200).to.be.equal(matrixChain.matrixChainOrder());
+            expect("A1A2A3").to.be.equal(matrixChain.matrixChainOrder());
+        })
+
+        it('test_4',() => {
+            let p = [5,10];
+            let matrixChain = new MatrixChain(p);
+            expect(0).to.be.equal(matrixChain.matrixChainOrder());
+            expect(null).to.be.equal(matrixChain.matrixChainOrder());
+        })
+
+        it('test_5',() => {
+            let p = [30,35,15,5,10,20,25];
+            let matrixChain = new MatrixChain(p);
+            expect(15125).to.be.equal(matrixChain.matrixChainOrder());
+            expect('(A1(A2A3))((A4A5)A6))').to.be.equal(matrixChain.matrixChainOrder());
+        })
+    })
 })
