@@ -16,8 +16,13 @@ export class MatrixChain{
             return 0
         }
 
-        for(let i = 2 ; i <= this.chainLen; i++){
-            //for(let j = 1 ; j < = )
+        for(let l = 2 ; l <= this.chainLen; l++){
+            for(let i = 1 ; i <= this.chainLen - l + 1; i++){
+                let j = i + l -1;
+                for(let k = i ; k < j ; k++){
+                    
+                }
+            }
         }
 
         return;
