@@ -66,35 +66,35 @@ describe('动态规划', () => {
             let p = [15,10,20,50];
             let matrixChain = new MatrixChain(p);
             expect(17500).to.be.equal(matrixChain.matrixChainOrder());
-            expect("A1(A2A3)").to.be.equal(matrixChain.matrixChainOrder());
+            expect("(A0(A1A2))").to.be.equal(matrixChain.printOptimalParens());
         })
 
         it('test_2',() => {
             let p = [15,10,20,10];
             let matrixChain = new MatrixChain(p);
-            expect(5500).to.be.equal(matrixChain.matrixChainOrder());
-            expect("A1(A2A3)").to.be.equal(matrixChain.matrixChainOrder());
+            expect(3500).to.be.equal(matrixChain.matrixChainOrder());
+            expect("(A0(A1A2))").to.be.equal(matrixChain.printOptimalParens());
         })
 
         it('test_3',() => {
             let p = [5,10,20,10];
             let matrixChain = new MatrixChain(p);
-            expect(200).to.be.equal(matrixChain.matrixChainOrder());
-            expect("A1A2A3").to.be.equal(matrixChain.matrixChainOrder());
+            expect(2000).to.be.equal(matrixChain.matrixChainOrder());
+            expect("((A0A1)A2)").to.be.equal(matrixChain.printOptimalParens());
         })
 
         it('test_4',() => {
             let p = [5,10];
             let matrixChain = new MatrixChain(p);
             expect(0).to.be.equal(matrixChain.matrixChainOrder());
-            expect(null).to.be.equal(matrixChain.matrixChainOrder());
+            expect('A0').to.be.equal(matrixChain.printOptimalParens());
         })
 
         it('test_5',() => {
             let p = [30,35,15,5,10,20,25];
             let matrixChain = new MatrixChain(p);
             expect(15125).to.be.equal(matrixChain.matrixChainOrder());
-            expect('(A1(A2A3))((A4A5)A6))').to.be.equal(matrixChain.matrixChainOrder());
+            expect('((A0(A1A2))((A3A4)A5))').to.be.equal(matrixChain.printOptimalParens());
         })
     })
 })
