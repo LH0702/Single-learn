@@ -1,6 +1,7 @@
 import { expect, AssertionError } from 'chai';
 import { cutRod, memoizedCutRod, buttonUPCutRod } from '../../dynamic-programming/cut-rod';
 import { MatrixChain } from '../../dynamic-programming/matrix-chain';
+import { LCS } from '../../dynamic-programming/LCS';
 
 describe('动态规划', () => {
 
@@ -95,6 +96,48 @@ describe('动态规划', () => {
             let matrixChain = new MatrixChain(p);
             expect(15125).to.be.equal(matrixChain.matrixChainOrder());
             expect('((A0(A1A2))((A3A4)A5))').to.be.equal(matrixChain.printOptimalParens());
+        })
+    })
+
+    describe('LCS', ()=>{
+        it('test_1',() => {
+            let x = "abcbdab";
+            let y = "bdcaba";
+            let lcs = new LCS(x,y);
+            expect(4).to.be.equal(lcs.lcsLength());
+            expect("bcba").to.be.equal(lcs.lcs());
+        })
+
+        it('test_2',() => {
+            let x = "abcdefghijklmnopqrstuvwxyz";
+            let y = "abcdefghijklmnopqrstuvwxyz";
+            let lcs = new LCS(x,y);
+            expect(26).to.be.equal(lcs.lcsLength());
+            expect("abcdefghijklmnopqrstuvwxyz").to.be.equal(lcs.lcs());
+        })
+
+        it('test_3',() => {
+            let x = "abcdefghijklmnopqrstuvwxyz12452sdasddwqeqwqwed";
+            let y = "abcdefghijklmnopqrstuvwxyz";
+            let lcs = new LCS(x,y);
+            expect(26).to.be.equal(lcs.lcsLength());
+            expect("abcdefghijklmnopqrstuvwxyz").to.be.equal(lcs.lcs());
+        })
+
+        it('test_4',() => {
+            let x = "d";
+            let y = "abcdefghijklmnopqrstuvwxyz";
+            let lcs = new LCS(x,y);
+            expect(1).to.be.equal(lcs.lcsLength());
+            expect("d").to.be.equal(lcs.lcs());
+        })
+
+        it('test_5',() => {
+            let x = "";
+            let y = "abcdefghijklmnopqrstuvwxyz";
+            let lcs = new LCS(x,y);
+            expect(0).to.be.equal(lcs.lcsLength());
+            expect("").to.be.equal(lcs.lcs());
         })
     })
 })
