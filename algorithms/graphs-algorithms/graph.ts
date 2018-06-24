@@ -1,35 +1,29 @@
 import { Queue } from "../data-structure/queue";
 
-export class Graph{
-    private vertexs :Vertex[] =[];
+export class Graph {
+    private vertexs: Vertex[] = [];
 
-    addVertex(vertex :Vertex){
-        if(vertex != null){
+    addVertex(vertex: Vertex) {
+        if (vertex != null) {
             this.vertexs.push(vertex);
         }
     }
 
-    convertToMatrix(){
-        
+    convertToMatrix() {
+
     }
 
-    breadthFirstSearch(source:Vertex){
-        for(let vertex of this.vertexs){
-            vertex.color = Color.WHITE;
-            vertex.clearPreVertex();
-            vertex.deep = 0;
-        }
+    breadthFirstSearch(source: Vertex) {
+        this.initVertexs();
 
         source.color = Color.GREY;
-        source.deep = 0;
-        source.clearPreVertex();
         let queue = new Queue();
         queue.enQueue(source);
 
-        while(queue.isNotEmpty()){
+        while (queue.isNotEmpty()) {
             let e = <Vertex>queue.deQueue();
-            for(let adjacent of e.getAdjacents()){
-                if(adjacent.vertex.color == Color.WHITE){
+            for (let adjacent of e.getAdjacents()) {
+                if (adjacent.vertex.color == Color.WHITE) {
                     adjacent.vertex.color = Color.GREY;
                     adjacent.vertex.deep += 1;
                     adjacent.vertex.addPreVertex(e);
@@ -40,41 +34,72 @@ export class Graph{
         }
     }
 
-    deepFirstSearch(){
+    deepFirstSearch(source: Vertex) {
+        this.initVertexs()
+        source.color = Color.GREY;
 
+        for (let adjacent of source.getAdjacents()) {
+            if (adjacent.vertex.color == Color.WHITE) {
+
+            }
+        }
+
+        source.color = Color.BLACK;
+    }
+
+    dfsVisit(vertex: Vertex) {
+        vertex.color = Color.GREY;
+        vertex.deep += 1;
+
+        for(let adjacent of vertex.getAdjacents()){
+            if(adjacent.vertex.color == Color.WHITE){
+                adjacent.vertex.addPreVertex(vertex);
+                this.dfsVisit(adjacent.vertex);
+            }
+        }
+
+        vertex.color = Color.BLACK;
+    }
+
+    private initVertexs() {
+        for (let vertex of this.vertexs) {
+            vertex.color = Color.WHITE;
+            vertex.clearPreVertex();
+            vertex.deep = 0;
+        }
     }
 }
 
-export class Vertex{
+export class Vertex {
 
-    private adjacents : AdjacentVertex[] = [];
+    private adjacents: AdjacentVertex[] = [];
 
     private _color: Color;
 
     private _deep: number;
 
-    private preVertex :Vertex[] = [];
+    private preVertex: Vertex[] = [];
 
-    addAdjacent(vertex:Vertex,weight?:number){
-        let adjacentVertex = new AdjacentVertex(vertex,weight);
+    addAdjacent(vertex: Vertex, weight?: number) {
+        let adjacentVertex = new AdjacentVertex(vertex, weight);
         this.adjacents.push(adjacentVertex);
     }
 
-    getAdjacents(): AdjacentVertex[]{
+    getAdjacents(): AdjacentVertex[] {
         return this.adjacents;
     }
 
-    eachAdjacent(callBack:Function){
-        for(let vertex of this.adjacents){
+    eachAdjacent(callBack: Function) {
+        for (let vertex of this.adjacents) {
             callBack(vertex);
         }
     }
 
-    public clearPreVertex(){
+    public clearPreVertex() {
         this.preVertex = [];
     }
 
-    public addPreVertex(vertex:Vertex){
+    public addPreVertex(vertex: Vertex) {
         this.preVertex.push(vertex);
     }
 
@@ -86,7 +111,7 @@ export class Vertex{
         this._deep = value;
     }
 
-    
+
 
     public get color(): Color {
         return this._color;
@@ -98,18 +123,18 @@ export class Vertex{
 
 }
 
- export enum Color {
+export enum Color {
     WHITE,
     BLACK,
     GREY
 }
 
-class AdjacentVertex{
+class AdjacentVertex {
     private _weight: number;
-   
-    private _vertex: Vertex; 
 
-    constructor(vertex:Vertex,weight?:number){
+    private _vertex: Vertex;
+
+    constructor(vertex: Vertex, weight?: number) {
         this._vertex = vertex;
         this._weight = weight;
     }
