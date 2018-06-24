@@ -1,4 +1,5 @@
 import { Queue } from "../data-structure/queue";
+import { PriorityQueue } from "../data-structure/priority-queue";
 
 export class Graph {
     private vertexs: Vertex[] = [];
@@ -51,8 +52,8 @@ export class Graph {
         vertex.color = Color.GREY;
         vertex.deep += 1;
 
-        for(let adjacent of vertex.getAdjacents()){
-            if(adjacent.vertex.color == Color.WHITE){
+        for (let adjacent of vertex.getAdjacents()) {
+            if (adjacent.vertex.color == Color.WHITE) {
                 adjacent.vertex.addPreVertex(vertex);
                 this.dfsVisit(adjacent.vertex);
             }
@@ -68,6 +69,44 @@ export class Graph {
             vertex.deep = 0;
         }
     }
+
+    /**
+     * prim algorithms minimum spanning tree
+     * @param root 源点
+     */
+    prim(root: Vertex) {
+        for (let vertex of this.vertexs) {
+            vertex.key = Number.MAX_SAFE_INTEGER;
+            vertex.clearPreVertex();
+        }
+
+        root.key = 0;
+        let priorityQueue = new PriorityQueue(
+            (edge1: Vertex, edge2: Vertex) => {
+                return edge1.key > edge2.key;
+            })
+
+        priorityQueue.insert(this.vertexs);
+
+        while(priorityQueue.isNotEmpty()){
+            let vertex = <Vertex>priorityQueue.extractMin();
+            for(let adj of vertex.getAdjacents()){
+                if(priorityQueue.find(adj) && adj.weight < adj.vertex.key){
+                    adj.vertex.key = adj.weight;
+                    priorityQueue.increase(adj.vertex);
+                    adj.vertex.addPreVertex(vertex);
+                }
+            }
+        }
+    }
+
+    /**
+     * kruskal algorithms minimum spanning tree
+     * @param root 源点
+     */
+    kruskal(root: Vertex) {
+
+    }
 }
 
 export class Vertex {
@@ -78,7 +117,14 @@ export class Vertex {
 
     private _deep: number;
 
-    private preVertex: Vertex[] = [];
+    private preVertex: Vertex ;
+
+    // 标识任意源点到该点的距离
+    private _key: number;
+
+    static generateVertex(): Vertex {
+        return new Vertex();
+    }
 
     addAdjacent(vertex: Vertex, weight?: number) {
         let adjacentVertex = new AdjacentVertex(vertex, weight);
@@ -96,11 +142,11 @@ export class Vertex {
     }
 
     public clearPreVertex() {
-        this.preVertex = [];
+        this.preVertex = null;
     }
 
     public addPreVertex(vertex: Vertex) {
-        this.preVertex.push(vertex);
+        this.preVertex = vertex;
     }
 
     public get deep(): number {
@@ -119,6 +165,13 @@ export class Vertex {
 
     public set color(value: Color) {
         this._color = value;
+    }
+
+    public get key(): number {
+        return this._key;
+    }
+    public set key(value: number) {
+        this._key = value;
     }
 
 }

@@ -2,21 +2,27 @@
  * minimum
  */
 export class PriorityQueue {
-    private queue: number[] = [];
+    private queue: any[] = [];
 
-    insert(input: number | number[]): PriorityQueue {
-        if (typeof input === 'number') {
-            this.queue.push(Number.MAX_SAFE_INTEGER);
-            this.increaseKey(this.queue.length - 1, <number>input);
-        } else if (input instanceof Array) {
+    comparator : Function ;
+    constructor(comparator = (a:any,b:any) => { return a > b}){
+        this.comparator = comparator;
+    }
+
+
+    insert(input: any | any[]): PriorityQueue {
+        if(input instanceof Array) {
             for (let e of input) {
                 this.queue.push(e);
                 this.increaseKey(this.queue.length - 1, e);
             }
         } else {
-            throw new Error("Input type is invalid");
+            this.queue.push(input);
+            this.increaseKey(this.queue.length - 1,input);
         }
-        return this
+        return this;
+
+
     }
 
     minimum(): number {
@@ -27,7 +33,7 @@ export class PriorityQueue {
         return this.queue[0];
     }
 
-    extractMin(): number {
+    extractMin(): any {
 
         if (this.queue.length === 0) {
             return null;
@@ -44,19 +50,28 @@ export class PriorityQueue {
         return min;
     }
 
-    increaseKey(index: number, key: number) {
-        if (key > this.queue[index]) {
+    private increaseKey(index: number, element: any) {
+        if (this.comparator(element , this.queue[index])) {
             throw new Error('input key is larger than current');
         }
 
-        this.queue[index] = key;
+        this.queue[index] = element;
         let tmpIdx = index;
-        while (tmpIdx > 0 && this.queue[this.getParent(tmpIdx)] > key) {
+        while (tmpIdx > 0 && this.comparator(this.queue[this.getParent(tmpIdx)], element)) {
             this.swap(tmpIdx, this.getParent(tmpIdx));
             tmpIdx = this.getParent(tmpIdx);
         }
 
     }
+
+    increase(data:any){
+        for(let i = 0 ; i < this.queue.length; i++ ){
+            if(this.queue[i] == data){
+                this.increaseKey(i,data);
+                return;
+            }
+        }
+    }  
 
     clear() {
         this.queue = [];
@@ -66,14 +81,32 @@ export class PriorityQueue {
         return this.queue.length;
     }
 
+    isEmpty():boolean{
+        return this.queue.length == 0;
+    }
+
+    isNotEmpty():boolean{
+        return ! this.isEmpty();
+    }
+
+    find(data:any):boolean{
+        for(let e of this.queue){
+            if(e == data){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private minHeapify(idx: number) {
         let minIndex = idx;
         let length = this.queue.length;
-        if (this.getLeft(idx) < length && this.queue[minIndex] > this.queue[this.getLeft(idx)]) {
+        if (this.getLeft(idx) < length && this.comparator(this.queue[minIndex],this.queue[this.getLeft(idx)])) {
             minIndex = this.getLeft(idx);
         }
 
-        if (this.getRight(idx) < length && this.queue[minIndex] > this.queue[this.getRight(idx)]) {
+        if (this.getRight(idx) < length &&  this.comparator(this.queue[minIndex],this.queue[this.getRight(idx)])) {
             minIndex = this.getRight(idx);
         }
 
