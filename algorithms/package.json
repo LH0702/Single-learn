@@ -10,7 +10,8 @@
     "test-rbtree": "mocha  dist/test/data-structure/binary-search-tree/rbtree-test.js",
     "test-priorityQueue": "mocha  dist/test/priority-queue/priority-queue-test.js",
     "test-dynamic": "mocha --timeout 15000 dist/test/dynamic-programming/dynamic-programming-test.js",
-    "test-string": "mocha  dist/test/string-algorithms/string-algorithms-test.js"
+    "test-string": "mocha  dist/test/string-algorithms/string-algorithms-test.js",
+    "test-graph" : "mocha  dist/test/graph-algorithms/graph-test.js"
   },
   "author": "",
   "license": "ISC",

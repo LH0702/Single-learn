@@ -4,10 +4,12 @@ import { PriorityQueue } from "../data-structure/priority-queue";
 export class Graph {
     private vertexs: Vertex[] = [];
 
-    addVertex(vertex: Vertex) {
+    addVertex(vertex: Vertex):Graph {
         if (vertex != null) {
             this.vertexs.push(vertex);
         }
+
+        return this;
     }
 
     convertToMatrix() {
@@ -74,7 +76,7 @@ export class Graph {
      * prim algorithms minimum spanning tree
      * @param root 源点
      */
-    prim(root: Vertex) {
+    prim(root: Vertex):string[]{
         for (let vertex of this.vertexs) {
             vertex.key = Number.MAX_SAFE_INTEGER;
             vertex.clearPreVertex();
@@ -88,16 +90,20 @@ export class Graph {
 
         priorityQueue.insert(this.vertexs);
 
+        let output = [];
         while(priorityQueue.isNotEmpty()){
             let vertex = <Vertex>priorityQueue.extractMin();
+            output.push(vertex.name);
             for(let adj of vertex.getAdjacents()){
-                if(priorityQueue.find(adj) && adj.weight < adj.vertex.key){
+                if(priorityQueue.find(adj.vertex) && adj.weight < adj.vertex.key){
                     adj.vertex.key = adj.weight;
                     priorityQueue.increase(adj.vertex);
                     adj.vertex.addPreVertex(vertex);
                 }
             }
         }
+
+        return output;
     }
 
     /**
@@ -121,14 +127,27 @@ export class Vertex {
 
     // 标识任意源点到该点的距离
     private _key: number;
+    
+    private _name: string;
 
-    static generateVertex(): Vertex {
-        return new Vertex();
+    public get name(): string {
+        return this._name;
+    }
+    public set name(value: string) {
+        this._name = value;
+    }
+    static generateVertex(name:string): Vertex {
+        return new Vertex(name);
     }
 
-    addAdjacent(vertex: Vertex, weight?: number) {
+    constructor(name:string){
+        this._name = name;
+    }
+
+    addAdjacent(vertex: Vertex, weight?: number):Vertex {
         let adjacentVertex = new AdjacentVertex(vertex, weight);
         this.adjacents.push(adjacentVertex);
+        return this;
     }
 
     getAdjacents(): AdjacentVertex[] {
